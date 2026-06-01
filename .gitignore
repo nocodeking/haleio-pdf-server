@@ -1,0 +1,6 @@
+node_modules/
+output/
+.env
+output/*.typ
+*.pdf
+bowtie-wbd.png
