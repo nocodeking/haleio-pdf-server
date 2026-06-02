@@ -125,10 +125,8 @@
   [
     #mono(size: 5pt, fill: neon)[PREPARED FOR]
     #v(0.08cm)
-    #text(font: "Inter", size: 11pt, weight: "black", fill: t1, name)
+    #text(font: "Inter", size: 11pt, weight: "black", fill: t1, name + " · " + company)
     #v(0.04cm)
-    #text(font: "Inter", size: 7pt, fill: neon, company)
-    #v(0.02cm)
     #mono(size: 4.5pt, fill: t3)[#text(fill: neon-dim, industry)]
   ],
   [
@@ -242,31 +240,27 @@
 
 // ── AI MODULE (vertical neon bar style) ──
 #let ai-module(n, title, problem, solution, benefit, example) = {
-  block(width: 100%, fill: card-bg, stroke: 0.5pt + luma(18), radius: 4pt, inset: 0pt,
-    grid(columns: (auto, 1fr), gutter: 0pt,
-      rect(width: 3.5pt, height: auto, fill: neon, radius: 2pt),
-      [
-        #v(0.3cm)
-        #grid(columns: (auto, 1fr), gutter: 0.3cm,
-          [
-            #v(0.05cm)
-            #mono(size: 4.5pt, fill: neon)[FIX #text(fill: t3, str(n))]
-          ],
-          [
-            #text(font: "Inter", size: 8.5pt, weight: "black", fill: t1)[#title]
-            #v(0.1cm)
-            #bdy(size: 6.5pt, fill: t3)[PROBLEM:] #bdy(size: 6.5pt)[#problem]
-            #v(0.06cm)
-            #bdy(size: 6.5pt, fill: neon)[SOLUTION:] #bdy(size: 6.5pt, fill: t1)[#solution]
-            #v(0.06cm)
-            #text(font: "Inter", size: 6pt, fill: green)[✓ #benefit]
-            #v(0.03cm)
-            #text(font: "Inter", size: 5.5pt, fill: t3, style: "italic")[Example: #example]
-          ]
-        )
-        #v(0.25cm)
-      ]
-    )
+  block(width: 100%, fill: card-bg,
+    stroke: (left: 3.5pt + neon, top: 0.5pt + luma(18), bottom: 0.5pt + luma(18), right: 0.5pt + luma(18)),
+    radius: 4pt, inset: 12pt,
+    [
+      #grid(columns: (auto, 1fr), gutter: 0.3cm,
+        [
+          #mono(size: 4.5pt, fill: neon)[FIX #text(fill: t3, str(n))]
+        ],
+        [
+          #text(font: "Inter", size: 8.5pt, weight: "black", fill: t1)[#title]
+          #v(0.1cm)
+          #bdy(size: 6.5pt, fill: t3)[PROBLEM:] #bdy(size: 6.5pt)[#problem]
+          #v(0.06cm)
+          #bdy(size: 6.5pt, fill: neon)[SOLUTION:] #bdy(size: 6.5pt, fill: t1)[#solution]
+          #v(0.06cm)
+          #text(font: "Inter", size: 6pt, fill: green)[✓ #benefit]
+          #v(0.03cm)
+          #text(font: "Inter", size: 5.5pt, fill: t3, style: "italic")[Example: #example]
+        ]
+      )
+    ]
   )
   small-spacer
 }
@@ -331,7 +325,7 @@
   #grid(columns: (1.8fr, 1.3fr, 1.3fr), gutter: 0.15cm,
     text(font: "Inter", size: 6pt, weight: "bold", fill: t2, ""),
     align(center, text(font: "Inter", size: 5.5pt, weight: "black", fill: red, "BEFORE")),
-    align(center, text(font: "Inter", size: 5.5pt, weight: "black", fill: neon, "AFTER")),
+    align(center, text(font: "Inter", size: 5.5pt, weight: "black", fill: green, "AFTER")),
   )
   #v(0.1cm)
   #rect(width: 100%, height: 0.5pt, fill: luma(18))
@@ -383,28 +377,25 @@
 
 // ── PHASE CARDS ──
 #let phase(pn, days, title, desc) = block(
-  width: 100%, fill: card-bg, stroke: 0.5pt + luma(18), radius: 4pt, inset: 0pt,
-  grid(columns: (auto, 1fr), gutter: 0pt,
-    rect(width: 3.5pt, height: auto, fill: neon, radius: 2pt),
-    [
-      #v(0.25cm)
-      #grid(columns: (auto, 1fr), gutter: 0.3cm,
-        align(center + horizon, [
-          #block(width: 22pt, height: 22pt, fill: neon, radius: 3pt,
-            align(center + horizon, text(font: "Inter", size: 9pt, weight: "black", fill: bg-dark, str(pn)))
-          )
-          #v(0.08cm)
-          #mono(size: 4pt, fill: neon, days)
-        ]),
-        [
-          #text(font: "Inter", size: 8pt, weight: "black", fill: t1)[#title]
-          #v(0.06cm)
-          #bdy(size: 6pt)[#desc]
-        ]
-      )
-      #v(0.2cm)
-    ]
-  )
+  width: 100%, fill: card-bg,
+  stroke: (left: 3.5pt + neon, top: 0.5pt + luma(18), bottom: 0.5pt + luma(18), right: 0.5pt + luma(18)),
+  radius: 4pt, inset: 12pt,
+  [
+    #grid(columns: (auto, 1fr), gutter: 0.3cm,
+      align(center + horizon, [
+        #block(width: 22pt, height: 22pt, fill: neon, radius: 3pt,
+          align(center + horizon, text(font: "Inter", size: 9pt, weight: "black", fill: bg-dark, str(pn)))
+        )
+        #v(0.06cm)
+        #mono(size: 4pt, fill: neon, days)
+      ]),
+      [
+        #text(font: "Inter", size: 8pt, weight: "black", fill: t1)[#title]
+        #v(0.06cm)
+        #bdy(size: 6pt)[#desc]
+      ]
+    )
+  ]
 )
 
 #grid(columns: 2, gutter: 0.25cm,
@@ -427,7 +418,30 @@
   ),
 )
 
-#v(0.4cm)
+#v(0.35cm)
+
+// ── PROOF POINTS ──
+#mono(size: 5pt)[PROVEN RESULTS — REAL CLIENT OUTCOMES]
+#small-spacer
+#grid(columns: 3, gutter: 0.2cm,
+  block(fill: card-bg, stroke: 0.5pt + luma(18), radius: 4pt, inset: 10pt, align(center, [
+    #text(font: "Inter", size: 11pt, weight: "black", fill: neon, "+$1M")
+    #v(0.04cm)
+    #bdy(size: 5pt, fill: t3)[in upsell revenue surfaced from existing Sage 50 data · Welding distributor]
+  ])),
+  block(fill: card-bg, stroke: 0.5pt + luma(18), radius: 4pt, inset: 10pt, align(center, [
+    #text(font: "Inter", size: 11pt, weight: "black", fill: amber, "21d → 4d")
+    #v(0.04cm)
+    #bdy(size: 5pt, fill: t3)[claims processing cycle cut by 5× · Warranty manufacturer]
+  ])),
+  block(fill: card-bg, stroke: 0.5pt + luma(18), radius: 4pt, inset: 10pt, align(center, [
+    #text(font: "Inter", size: 11pt, weight: "black", fill: green, "97% → 115%")
+    #v(0.04cm)
+    #bdy(size: 5pt, fill: t3)[NRR lift from automated post-sale triggers · CS team]
+  ])),
+)
+
+#v(0.35cm)
 
 // ── FOUNDER NOTE + HEASHOT + CTA ──
 #card[
