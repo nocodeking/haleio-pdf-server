@@ -461,7 +461,7 @@
   #align(center, [
     #link("https://cal.com/haleio/discovery")[
       #block(fill: neon, radius: 4pt, inset: (x: 28pt, y: 9pt),
-        align(center, text(font: "Inter", size: 12pt, weight: "black", fill: bg-dark, "Book a Diagnostic · \$4,950"))
+        align(center, text(font: "Inter", size: 12pt, weight: "black", fill: bg-dark)[Book a Diagnostic · \$4,950])
       )
     ]
     #v(0.1cm)
