@@ -190,7 +190,7 @@ app.post('/generate', (req, res) => {
     const safeName = data.company.replace(/[^a-zA-Z0-9]/g, '_').slice(0, 40);
     const pdfBuffer = compileAndReturn(template, safeName, res);
     res.setHeader('Content-Type', 'application/pdf');
-    res.setHeader('Content-Disposition', `attachment; filename="${safeName}_report.pdf"`);
+    res.setHeader('Content-Disposition', `attachment; filename="RevenueLeakReport-${safeName}-Haleio.pdf"`);
     res.send(pdfBuffer);
     const revStr = data.estTotal ? ` | Est. total: ${data.estTotal}` : '';
     console.log(`Generated: ${safeName} (${(pdfBuffer.length/1024).toFixed(0)}KB${revStr})`);
@@ -220,9 +220,9 @@ app.post('/generate-and-send', async (req, res) => {
           headers: { 'Authorization': `Bearer ${process.env.RESEND_API_KEY}`, 'Content-Type': 'application/json' },
           body: JSON.stringify({
             from: process.env.EMAIL_FROM || 'HALEIO <reports@haleio.com>', to: email,
-            subject: `Revenue report for ${data.company}`,
-            html: `<p>Hi ${firstName},</p><p>Your revenue performance report for <strong>${data.company}</strong> is attached.</p><p>It benchmarks your industry, revenue tier, and operational challenges against what similar businesses typically find. Think of it as a starting point. The full picture comes from running your actual CRM data through a diagnostic.</p><p>If you want the real numbers, book a diagnostic at <a href="https://haleio.com">haleio.com</a>.</p><table cellpadding="0" cellspacing="0" border="0"><tr><td style="padding-right:12px;vertical-align:middle"><img src="https://haleio.com/haleio-headshot-email.png" alt="Darren Hale" width="55" height="55" style="border-radius:50%"></td><td style="vertical-align:middle"><strong>Darren Hale</strong><br>Founder, HALEIO<br>Adelaide</td></tr></table>`,
-            attachments: [{ filename: `${safeName}_report.pdf`, content: pdfBuffer.toString('base64') }],
+            subject: `Your Revenue Report – ${data.company}`,
+            html: `<p>Hi ${firstName},</p><p>Your report's attached. It shows where <strong>${data.company}</strong> is leaking revenue compared to other ${data.industry || 'businesses'} — the headline was <strong>${data.estTotal || 'significant'}</strong> per year.</p><p>This is based on your self-assessment. The accurate picture only comes from looking at your actual CRM data.</p><p>If you want the real diagnostic run on your CRM, book it here: <a href="https://haleio.com/discovery">haleio.com/discovery</a></p><table cellpadding="0" cellspacing="0" border="0"><tr><td style="padding-right:12px;vertical-align:middle"><img src="https://haleio.com/haleio-headshot-email.png" alt="Darren Hale" width="55" height="55" style="border-radius:50%"></td><td style="vertical-align:middle"><strong>Darren Hale</strong><br>Founder, HALEIO<br>Adelaide</td></tr></table>`,
+            attachments: [{ filename: `RevenueLeakReport-${safeName}-Haleio.pdf`, content: pdfBuffer.toString('base64') }],
           }),
         });
         if (resp.ok) emailSent = true; else emailError = `Resend: ${await resp.text()}`;
