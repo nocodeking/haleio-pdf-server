@@ -412,23 +412,26 @@
 #v(0.35cm)
 
 // ── PROOF POINTS ──
-#mono(size: 5pt)[PROVEN RESULTS — REAL CLIENT OUTCOMES]
+#mono(size: 5.5pt)[PROVEN RESULTS — REAL CLIENT OUTCOMES]
 #small-spacer
 #grid(columns: 3, gutter: 0.2cm,
   block(fill: card-bg, stroke: 0.5pt + luma(18), radius: 4pt, inset: 10pt, align(center, [
-    #text(font: "Inter", size: 11pt, weight: "black", fill: neon, "+$1M")
-    #v(0.04cm)
-    #bdy(size: 5pt, fill: t3)[Upsell revenue surfaced from Sage 50 data · Welding distributor]
+    #text(font: "Inter", size: 13pt, weight: "black", fill: neon, "+$1M")
+    #v(0.06cm)
+    #bdy(size: 6pt)[Upsell revenue from existing Sage 50 data]
+    #bdy(size: 5.5pt, fill: t3)[Welding distributor]
   ])),
   block(fill: card-bg, stroke: 0.5pt + luma(18), radius: 4pt, inset: 10pt, align(center, [
-    #text(font: "Inter", size: 11pt, weight: "black", fill: amber, "21d → 4d")
-    #v(0.04cm)
-    #bdy(size: 5pt, fill: t3)[Claims processing cut by 5× · Warranty manufacturer]
+    #text(font: "Inter", size: 13pt, weight: "black", fill: amber, "21d → 4d")
+    #v(0.06cm)
+    #bdy(size: 6pt)[Claims processing cycle cut by 5×]
+    #bdy(size: 5.5pt, fill: t3)[Warranty manufacturer]
   ])),
   block(fill: card-bg, stroke: 0.5pt + luma(18), radius: 4pt, inset: 10pt, align(center, [
-    #text(font: "Inter", size: 11pt, weight: "black", fill: green, "97% → 115%")
-    #v(0.04cm)
-    #bdy(size: 5pt, fill: t3)[NRR lift from automated triggers · Customer Success team]
+    #text(font: "Inter", size: 13pt, weight: "black", fill: green, "97% → 115%")
+    #v(0.06cm)
+    #bdy(size: 6pt)[NRR lift from automated triggers]
+    #bdy(size: 5.5pt, fill: t3)[Customer Success team]
   ])),
 )
 
