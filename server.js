@@ -155,6 +155,11 @@ function compileAndReturn(templateStr, safeName, res) {
   const typFile = path.join(OUTPUT_DIR, `${safeName}_${ts}.typ`);
   const pdfFile = path.join(OUTPUT_DIR, `${safeName}_${ts}.pdf`);
   fs.writeFileSync(typFile, templateStr, 'utf-8');
+  // Copy assets so Typst can find them relative to the .typ file
+  ['haleio-logo.svg', 'darren-headshot.jpg'].forEach(f => {
+    const src = path.join(__dirname, f);
+    if (fs.existsSync(src)) fs.copyFileSync(src, path.join(OUTPUT_DIR, f));
+  });
   const cmd = `typst compile --font-path "${FONTS_DIR}" "${typFile}" "${pdfFile}"`;
   execSync(cmd, { timeout: 30000, cwd: __dirname });
   fs.unlinkSync(typFile);
