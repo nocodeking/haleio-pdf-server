@@ -121,28 +121,21 @@
 #v(0.4cm)
 #h1[Revenue Performance Report]
 #v(0.25cm)
-#grid(columns: (auto, 1fr), gutter: 0.4cm,
-  [
-    #mono(size: 5pt, fill: neon)[PREPARED FOR]
-    #v(0.08cm)
-    #text(font: "Inter", size: 11pt, weight: "black", fill: t1, name + " · " + company)
-    #v(0.04cm)
-    #mono(size: 4.5pt, fill: t3)[#text(fill: neon-dim, industry)]
-  ],
-  [
-    #mono(size: 4pt, fill: t3)[SAMPLE]
-    #v(0.04cm)
-    #text(font: "Inter", size: 5.5pt, fill: t3, style: "italic")[Based on self-assessment benchmarks against #ind.sample]
-  ],
-)
+[
+  #mono(size: 5pt, fill: neon)[PREPARED FOR]
+  #v(0.08cm)
+  #text(font: "Inter", size: 11pt, weight: "black", fill: t1, name + " · " + company)
+  #v(0.04cm)
+  #mono(size: 4.5pt, fill: t3)[#text(fill: neon-dim, industry)]
+]
 
 #spacer
 
 // ── EXECUTIVE SUMMARY ──
 #card[
-  #bdy(size: 7pt)[#name, this report compares your responses against #ind.sample and industry benchmarks (CSIRO, HubSpot, Deloitte, Gartner 2025–2026). It's not a full audit — it's a starting point, built from your self-assessment, to show where AI-driven workflow changes could have the biggest impact on your revenue operations.]
+  #bdy(size: 8pt)[#name, this report compares your responses against #ind.sample and industry benchmarks (CSIRO, HubSpot, Deloitte, Gartner 2025–2026). It's not a full audit — it's a starting point, built from your self-assessment, to show where AI-driven workflow changes could have the biggest impact on your revenue operations.]
   #small-spacer
-  #bdy(size: 6pt, fill: t3)[#ind.n faces a #text(fill: neon, ind.gap) AI adoption gap, #ind.decay annual data decay, and #ind.admin of team time lost to admin. At an estimated #text(fill: neon, revenue) in revenue, that's approximately #text(fill: red, weight: "black", estTotal)/year in value eroding through data decay, admin drag, and missed opportunities.]
+  #bdy(size: 8pt)[#ind.n faces a #text(fill: neon, ind.gap) AI adoption gap, #ind.decay annual data decay, and #ind.admin of team time lost to admin. At an estimated #text(fill: neon, revenue) in revenue, that's approximately #text(fill: red, weight: "black", estTotal)/year in value eroding through data decay, admin drag, and missed opportunities.]
 ]
 
 #spacer
