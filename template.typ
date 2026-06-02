@@ -10,6 +10,15 @@
 #let adminHours = "10–20 hrs/week"
 #let headacheLabels = ("Data accuracy — records are out of date", "Admin overhead — too much manual work", "Lost follow-ups — deals fall through the cracks")
 
+// ── ESTIMATED DOLLAR VALUES (injected by server) ──
+#let estDecayLow = "$1.4M"
+#let estDecayHigh = "$3.4M"
+#let estAdmin = "$1.6M–$3.1M"
+#let estOppLow = "$750K"
+#let estOppHigh = "$2.2M"
+#let estTotal = "$3.7M–$8.7M"
+#let estSample = "850+ manufacturers"
+
 // ── SETUP ──
 #set page(paper: "a4", margin: (top: 2.2cm, bottom: 2cm, left: 2cm, right: 2cm), fill: rgb("#040404"))
 #set text(font: "Inter", size: 10pt, fill: luma(220))
@@ -138,6 +147,8 @@
       #bdy(size: 7pt)[#name, this report compares your responses against #ind.sample and industry benchmarks (CSIRO, HubSpot, Deloitte, Gartner 2025–2026). It's not a full audit — it's a starting point, built from your self-assessment, to show where AI-driven workflow changes could have the biggest impact on your revenue operations.]
       #small-spacer
       #bdy(size: 6.5pt, fill: t3)[Three benchmarks tell the story: #ind.n faces a #text(fill: neon, ind.gap) AI adoption gap, #ind.decay annual data decay, and #ind.admin of team time lost to admin. The opportunities below are specific to #text(fill: neon, company).]
+      #small-spacer
+      #bdy(size: 6.5pt)[At an estimated #text(fill: neon, revenue) in revenue, that's approximately #text(fill: red, weight: "black", estTotal)/year in value eroding through data decay, admin drag, and missed opportunities. A paid diagnostic would pinpoint the exact figure from your actual CRM data.]
     ]
   ],
   // ── SCORE CARD ──
@@ -181,6 +192,47 @@
   #text(font: "Inter", size: 5.5pt, fill: t3, style: "italic")[
     Sources: CSIRO 2025 · HubSpot 2026 · Deloitte 2025 · Gartner 2025
   ]
+]
+
+#spacer
+
+// ── ESTIMATED ANNUAL IMPACT ──
+#mono(size: 6pt)[ESTIMATED ANNUAL LEAK — #ind.n]
+#v(0.05cm)
+#bdy(size: 5.5pt, fill: t3)[Based on #revenue revenue · Industry benchmarks · Estimate only]
+#small-spacer
+#card[
+  #grid(columns: 3, gutter: 0.3cm,
+    align(center, [
+      #mono(size: 5pt, fill: red)[DATA DECAY]
+      #v(0.15cm)
+      #text(font: "Inter", size: 15pt, weight: "black", fill: red, estDecayLow + "–" + estDecayHigh)
+      #v(0.1cm)
+      #bdy(size: 5.5pt, fill: t3)[#ind.decay of CRM value lost per year]
+    ]),
+    align(center, [
+      #mono(size: 5pt, fill: amber)[ADMIN DRAG]
+      #v(0.15cm)
+      #text(font: "Inter", size: 15pt, weight: "black", fill: amber, estAdmin)
+      #v(0.1cm)
+      #bdy(size: 5.5pt, fill: t3)[#ind.admin of team hours on CRM admin]
+    ]),
+    align(center, [
+      #mono(size: 5pt, fill: green)[MISSED OPPORTUNITY]
+      #v(0.15cm)
+      #text(font: "Inter", size: 15pt, weight: "black", fill: green, estOppLow + "–" + estOppHigh)
+      #v(0.1cm)
+      #bdy(size: 5.5pt, fill: t3)[#ind.opp in upsells, cross-sells, referrals]
+    ]),
+  )
+  #v(0.2cm)
+  #edge
+  #v(0.2cm)
+  #align(center, [
+    #text(font: "Inter", size: 10.5pt, weight: "black", fill: t1)[Estimated total leak: #text(fill: red, estTotal)/year]
+    #v(0.05cm)
+    #bdy(size: 5.5pt, fill: t3)[This is a directional estimate. The exact number lives in your CRM. A paid diagnostic finds it.]
+  ])
 ]
 
 #spacer

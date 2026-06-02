@@ -22,13 +22,116 @@ const DEFAULTS = {
   headacheLabels: '("Data accuracy — records are out of date",)',
 };
 
-app.get('/health', (req, res) => {
-  res.json({ status: 'ok' });
-});
+// ── INDUSTRY DATA (mirrors template.typ percentages) ──
+const INDUSTRY_DATA = [
+  { match: 'Manufactur', decay: [28, 34], admin: 31, opp: [15, 22] },
+  { match: 'Wholesale', decay: [30, 38], admin: 35, opp: [18, 25] },
+  { match: 'Distribution', decay: [30, 38], admin: 35, opp: [18, 25] },
+  { match: 'Professional Service', decay: [24, 30], admin: 28, opp: [12, 18] },
+  { match: 'SaaS', decay: [22, 28], admin: 24, opp: [8, 14] },
+  { match: 'Technology', decay: [22, 28], admin: 24, opp: [8, 14] },
+  { match: 'Construction', decay: [32, 40], admin: 38, opp: [20, 30] },
+  { match: 'Trades', decay: [32, 40], admin: 38, opp: [20, 30] },
+  { match: 'Health', decay: [30, 36], admin: 30, opp: [10, 16] },
+  { match: 'Retail', decay: [22, 28], admin: 24, opp: [10, 20] },
+];
+
+function getIndustryPcts(industry) {
+  const fallback = { decay: [26, 32], admin: 29, opp: [10, 20] };
+  if (!industry) return fallback;
+  const match = INDUSTRY_DATA.find(d => industry.includes(d.match));
+  return match || fallback;
+}
+
+function parseRevenue(str) {
+  if (!str || str === 'Not specified' || str === '') return null;
+  let s = str.replace(/[\$,]/g, '').trim();
+  if (!s) return null;
+
+  // "Under $X" → assume X as upper bound
+  const underMatch = s.match(/Under\s*([\d.]+)\s*([MBK])?/i);
+  if (underMatch) {
+    let val = parseFloat(underMatch[1]);
+    const unit = (underMatch[2] || 'M').toUpperCase();
+    if (unit === 'K') val *= 1000;
+    if (unit === 'M') val *= 1000000;
+    if (unit === 'B') val *= 1000000000;
+    return { low: Math.round(val * 0.3), high: Math.round(val), midpoint: Math.round(val * 0.65) };
+  }
+
+  // "X+" or "$XM+" → multiply by 1.5 for upper
+  const plusMatch = s.match(/([\d.]+)\s*([MBK]?)\s*\+/i);
+  if (plusMatch) {
+    let val = parseFloat(plusMatch[1]);
+    const unit = (plusMatch[2] || 'M').toUpperCase();
+    if (unit === 'K') val *= 1000;
+    if (unit === 'M') val *= 1000000;
+    if (unit === 'B') val *= 1000000000;
+    return { low: Math.round(val), high: Math.round(val * 1.5), midpoint: Math.round(val * 1.25) };
+  }
+
+  // "X — Y" or "X - Y" range
+  const rangeMatch = s.match(/([\d.]+)\s*[MBK]?\s*[–—-]\s*([\d.]+)\s*([MBK])?/i);
+  if (rangeMatch) {
+    let low = parseFloat(rangeMatch[1]);
+    let high = parseFloat(rangeMatch[2]);
+    const unit = (rangeMatch[3] || 'M').toUpperCase();
+    if (unit === 'K') { low *= 1000; high *= 1000; }
+    if (unit === 'M') { low *= 1000000; high *= 1000000; }
+    if (unit === 'B') { low *= 1000000000; high *= 1000000000; }
+    return { low: Math.round(low), high: Math.round(high), midpoint: Math.round((low + high) / 2) };
+  }
+
+  // Single number
+  const singleMatch = s.match(/([\d.]+)\s*([MBK])?/i);
+  if (singleMatch) {
+    let val = parseFloat(singleMatch[1]);
+    const unit = (singleMatch[2] || 'M').toUpperCase();
+    if (unit === 'K') val *= 1000;
+    if (unit === 'M') val *= 1000000;
+    if (unit === 'B') val *= 1000000000;
+    return { low: Math.round(val * 0.8), high: Math.round(val * 1.2), midpoint: Math.round(val) };
+  }
+
+  return null;
+}
+
+function fmtDollar(val) {
+  if (val >= 1000000000) return '$' + (val / 1000000000).toFixed(1) + 'B';
+  if (val >= 1000000) return '$' + (val / 1000000).toFixed(1) + 'M';
+  if (val >= 1000) return '$' + Math.round(val / 1000) + 'K';
+  return '$' + Math.round(val);
+}
+
+function fmtDollarRange(low, high) {
+  if (low === high) return fmtDollar(low);
+  return fmtDollar(low) + '–' + fmtDollar(high);
+}
+
+function enrichWithEstimates(data) {
+  const parsed = parseRevenue(data.revenue);
+  if (!parsed) return;
+  const pcts = getIndustryPcts(data.industry);
+
+  data.estDecayLow = fmtDollar(Math.round(parsed.low * pcts.decay[0] / 100));
+  data.estDecayHigh = fmtDollar(Math.round(parsed.high * pcts.decay[1] / 100));
+  data.estAdmin = fmtDollarRange(
+    Math.round(parsed.low * pcts.admin / 100),
+    Math.round(parsed.high * pcts.admin / 100)
+  );
+  data.estOppLow = fmtDollar(Math.round(parsed.low * pcts.opp[0] / 100));
+  data.estOppHigh = fmtDollar(Math.round(parsed.high * pcts.opp[1] / 100));
+  // Total estimated range
+  const totalLow = Math.round(parsed.low * (pcts.decay[0] + pcts.admin + pcts.opp[0]) / 100);
+  const totalHigh = Math.round(parsed.high * (pcts.decay[1] + pcts.admin + pcts.opp[1]) / 100);
+  data.estTotal = fmtDollarRange(totalLow, totalHigh);
+  data.estSample = pcts.sample || (pcts.decay[0] + '%–' + pcts.decay[1] + '% decay');
+}
 
 function injectVariables(template, data) {
   let result = template;
-  const stringVars = ['company', 'name', 'industry', 'revenue', 'yearsOnCrm', 'adminHours'];
+  const stringVars = ['company', 'name', 'industry', 'revenue', 'yearsOnCrm', 'adminHours',
+    'estDecayLow', 'estDecayHigh', 'estAdmin', 'estOppLow', 'estOppHigh', 'estTotal', 'estSample'];
   stringVars.forEach(key => {
     const val = data[key] || DEFAULTS[key] || '';
     const escaped = val.replace(/"/g, '\\"');
@@ -40,9 +143,9 @@ function injectVariables(template, data) {
   if (Array.isArray(hv)) {
     const parts = hv.map(l => `"${l.replace(/"/g, '\\"')}"`);
     const formatted = '(' + parts.join(', ') + (parts.length === 1 ? ',)' : ')');
-    result = result.replace(/(#let\s+headacheLabels\s*=\s*)\([^)]*\)/, (_, prefix) => `${prefix}${formatted}`);
+    result = result.replace(/(#let\s+headacheLabels\s*=\s*)\("[^)]*\)/, (_, prefix) => `${prefix}${formatted}`);
   } else if (typeof hv === 'string') {
-    result = result.replace(/(#let\s+headacheLabels\s*=\s*)\([^)]*\)/, (_, prefix) => `${prefix}${hv}`);
+    result = result.replace(/(#let\s+headacheLabels\s*=\s*)\("[^)]*\)/, (_, prefix) => `${prefix}${hv}`);
   }
   return result;
 }
@@ -58,29 +161,39 @@ function compileAndReturn(templateStr, safeName, res) {
   return fs.readFileSync(pdfFile);
 }
 
+function processRequest(data) {
+  if (Array.isArray(data.headache)) {
+    const map = {
+      'data': 'Data accuracy — records are out of date',
+      'admin': 'Admin overhead — too much manual work',
+      'followup': "Lost follow-ups — deals fall through the cracks",
+      'process': 'Inconsistent process — everyone works differently',
+      'visibility': "No visibility — can't get reliable reports",
+    };
+    data.headacheLabels = data.headache.map(h => map[h] || h);
+  }
+  enrichWithEstimates(data);
+
+  let template = fs.readFileSync(TEMPLATE_SRC, 'utf-8');
+  template = injectVariables(template, data);
+  return template;
+}
+
+app.get('/health', (req, res) => {
+  res.json({ status: 'ok' });
+});
+
 app.post('/generate', (req, res) => {
   try {
     const data = { ...DEFAULTS, ...req.body };
-    if (Array.isArray(data.headache)) {
-      data.headacheLabels = data.headache.map(h => {
-        const map = {
-          'data': 'Data accuracy — records are out of date',
-          'admin': 'Admin overhead — too much manual work',
-          'followup': "Lost follow-ups — deals fall through the cracks",
-          'process': 'Inconsistent process — everyone works differently',
-          'visibility': "No visibility — can't get reliable reports",
-        };
-        return map[h] || h;
-      });
-    }
-    let template = fs.readFileSync(TEMPLATE_SRC, 'utf-8');
-    template = injectVariables(template, data);
+    const template = processRequest(data);
     const safeName = data.company.replace(/[^a-zA-Z0-9]/g, '_').slice(0, 40);
     const pdfBuffer = compileAndReturn(template, safeName, res);
     res.setHeader('Content-Type', 'application/pdf');
     res.setHeader('Content-Disposition', `attachment; filename="${safeName}_report.pdf"`);
     res.send(pdfBuffer);
-    console.log(`Generated: ${safeName} (${(pdfBuffer.length/1024).toFixed(0)}KB)`);
+    const revStr = data.estTotal ? ` | Est. total: ${data.estTotal}` : '';
+    console.log(`Generated: ${safeName} (${(pdfBuffer.length/1024).toFixed(0)}KB${revStr})`);
   } catch (err) {
     console.error('Generation failed:', err.message);
     res.status(500).json({ error: 'PDF generation failed', details: err.message });
@@ -90,23 +203,10 @@ app.post('/generate', (req, res) => {
 app.post('/generate-and-send', async (req, res) => {
   try {
     const data = { ...DEFAULTS, ...req.body };
-    if (Array.isArray(data.headache)) {
-      data.headacheLabels = data.headache.map(h => {
-        const map = {
-          'data': 'Data accuracy — records are out of date',
-          'admin': 'Admin overhead — too much manual work',
-          'followup': 'Lost follow-ups — deals fall through the cracks',
-          'process': 'Inconsistent process — everyone works differently',
-          'visibility': 'No visibility — can\'t get reliable reports',
-        };
-        return map[h] || h;
-      });
-    }
+    const template = processRequest(data);
     const email = data.email;
     if (!email) return res.status(400).json({ error: 'email is required' });
 
-    let template = fs.readFileSync(TEMPLATE_SRC, 'utf-8');
-    template = injectVariables(template, data);
     const safeName = data.company.replace(/[^a-zA-Z0-9]/g, '_').slice(0, 40);
     const pdfBuffer = compileAndReturn(template, safeName, res);
 
@@ -131,8 +231,8 @@ app.post('/generate-and-send', async (req, res) => {
       }
     } catch (e) { emailError = e.message; }
 
-    res.json({ success: true, email_sent: emailSent, email_error: emailError, company: data.company, pdf_size: pdfBuffer.length });
-    console.log(`${safeName}: PDF ${(pdfBuffer.length/1024).toFixed(0)}KB, email ${emailSent ? 'sent' : emailError}`);
+    res.json({ success: true, email_sent: emailSent, email_error: emailError, company: data.company, pdf_size: pdfBuffer.length, est_total: data.estTotal || null });
+    console.log(`${safeName}: PDF ${(pdfBuffer.length/1024).toFixed(0)}KB, est ${data.estTotal || 'n/a'}, email ${emailSent ? 'sent' : emailError}`);
   } catch (err) {
     console.error('Pipeline failed:', err.message);
     res.status(500).json({ error: 'Pipeline failed', details: err.message });
