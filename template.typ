@@ -459,7 +459,11 @@
   #accent-bar
   #v(0.2cm)
   #align(center, [
-    #link("https://cal.com/haleio/discovery")[#text(font: "Inter", size: 13pt, weight: "black", fill: neon)[Book a Diagnostic · \$4,950]]
+    #link("https://cal.com/haleio/discovery")[
+      #block(fill: neon, radius: 4pt, inset: (x: 28pt, y: 9pt),
+        align(center, text(font: "Inter", size: 12pt, weight: "black", fill: bg-dark, "Book a Diagnostic · \$4,950"))
+      )
+    ]
     #v(0.1cm)
     #bdy(size: 7pt, fill: t3)[Was #strike[#text(fill: red, style: "italic")[\$15,000]] — Founding rate ends soon. Delivered in 5 business days.]
   ])
