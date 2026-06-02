@@ -121,19 +121,17 @@
 #v(0.4cm)
 #h1[Revenue Performance Report]
 #v(0.25cm)
-[
-  #mono(size: 5pt, fill: neon)[PREPARED FOR]
-  #v(0.08cm)
-  #text(font: "Inter", size: 11pt, weight: "black", fill: t1, name + " · " + company)
-  #v(0.04cm)
-  #mono(size: 4.5pt, fill: t3)[#text(fill: neon-dim, industry)]
-]
+#mono(size: 5pt, fill: neon)[PREPARED FOR]
+#v(0.08cm)
+#text(font: "Inter", size: 11pt, weight: "black", fill: t1, name + " · " + company)
+#v(0.04cm)
+#mono(size: 4.5pt, fill: t3)[#text(fill: neon-dim, industry)]
 
 #spacer
 
 // ── EXECUTIVE SUMMARY ──
 #card[
-  #bdy(size: 8pt)[#name, this report compares your responses against #ind.sample and industry benchmarks (CSIRO, HubSpot, Deloitte, Gartner 2025–2026). It's not a full audit — it's a starting point, built from your self-assessment, to show where AI-driven workflow changes could have the biggest impact on your revenue operations.]
+  #bdy(size: 8pt)[#name, this report compares your responses against #ind.sample and industry benchmarks (CSIRO, HubSpot, Deloitte, Gartner 2025–2026). It's not a full audit — it's a starting point, built from your self-assessment, to show where AI-driven workflow changes could have the biggest impact on your revenue performance.]
   #small-spacer
   #bdy(size: 8pt)[#ind.n faces a #text(fill: neon, ind.gap) AI adoption gap, #ind.decay annual data decay, and #ind.admin of team time lost to admin. At an estimated #text(fill: neon, revenue) in revenue, that's approximately #text(fill: red, weight: "black", estTotal)/year in value eroding through data decay, admin drag, and missed opportunities.]
 ]
@@ -420,17 +418,17 @@
   block(fill: card-bg, stroke: 0.5pt + luma(18), radius: 4pt, inset: 10pt, align(center, [
     #text(font: "Inter", size: 11pt, weight: "black", fill: neon, "+$1M")
     #v(0.04cm)
-    #bdy(size: 5pt, fill: t3)[in upsell revenue surfaced from existing Sage 50 data · Welding distributor]
+    #bdy(size: 5pt, fill: t3)[Upsell revenue surfaced from Sage 50 data · Welding distributor]
   ])),
   block(fill: card-bg, stroke: 0.5pt + luma(18), radius: 4pt, inset: 10pt, align(center, [
     #text(font: "Inter", size: 11pt, weight: "black", fill: amber, "21d → 4d")
     #v(0.04cm)
-    #bdy(size: 5pt, fill: t3)[claims processing cycle cut by 5× · Warranty manufacturer]
+    #bdy(size: 5pt, fill: t3)[Claims processing cut by 5× · Warranty manufacturer]
   ])),
   block(fill: card-bg, stroke: 0.5pt + luma(18), radius: 4pt, inset: 10pt, align(center, [
     #text(font: "Inter", size: 11pt, weight: "black", fill: green, "97% → 115%")
     #v(0.04cm)
-    #bdy(size: 5pt, fill: t3)[NRR lift from automated post-sale triggers · CS team]
+    #bdy(size: 5pt, fill: t3)[NRR lift from automated triggers · Customer Success team]
   ])),
 )
 
