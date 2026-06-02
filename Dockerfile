@@ -21,6 +21,7 @@ WORKDIR /app
 COPY fonts/ ./fonts/
 COPY template.typ ./template.typ
 COPY haleio-logo.svg ./haleio-logo.svg
+COPY darren-headshot.jpg ./darren-headshot.jpg
 COPY server.js ./server.js
 COPY package.json ./package.json
 

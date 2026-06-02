@@ -1,7 +1,7 @@
-// HALEIO Revenue Performance Report v6
-// Typst 0.14 · Inter + JetBrains Mono · Dark theme · Personalised
+// HALEIO Revenue Performance Report v8
+// Typst 0.14 · Inter + JetBrains Mono · Dark theme · Premium
 
-// ── DATA ──
+// ── DATA (injected by server) ──
 #let company = "Acme Industries"
 #let name = "Sarah"
 #let industry = "Manufacturing"
@@ -37,26 +37,26 @@
 #let t3 = luma(85)
 
 // ── HELPERS ──
-#let edge = rect(width: 100%, height: 2.5pt, fill: neon)
+#let accent-bar = rect(width: 100%, height: 3pt, fill: neon)
 #let spacer = { v(0.3cm) }
 #let small-spacer = { v(0.15cm) }
 
-#let card(body) = block(width: 100%, fill: card-bg, stroke: 0.3pt + luma(15), radius: 3pt, inset: 10pt, body)
-#let neon-card(body) = block(width: 100%, fill: neo, stroke: 0.4pt + neon-dim, radius: 3pt, inset: 10pt, body)
-
-#let metric-card(label, value) = {
-  card[
-    #set align(center)
-    #text(font: "JetBrains Mono", size: 5.5pt, fill: t3, weight: "bold", label)
-    #v(0.15cm)
-    #text(font: "Inter", size: 16pt, weight: "black", fill: red, value)
-  ]
-}
+#let card(body) = block(width: 100%, fill: card-bg, stroke: 0.5pt + luma(18), radius: 4pt, inset: 12pt, body)
+#let neon-card(body) = block(width: 100%, fill: neo, stroke: 0.5pt + neon-dim, radius: 4pt, inset: 12pt, body)
 
 #let h1(body) = { text(font: "Inter", size: 18pt, weight: "black", fill: t1, body) }
-#let h2(body) = { text(font: "Inter", size: 12pt, weight: "black", fill: t1, body) }
+#let h2(body) = { text(font: "Inter", size: 11pt, weight: "black", fill: t1, body) }
 #let bdy(fill: t2, size: 7.5pt, body) = { text(font: "Inter", size: size, fill: fill, body) }
 #let mono(size: 6pt, fill: t3, body) = { text(font: "JetBrains Mono", size: size, fill: fill, weight: "bold", body) }
+
+// ── FOOTER ──
+#let page-footer = {
+  v(0.3cm)
+  rect(width: 100%, height: 0.5pt, fill: luma(15))
+  v(0.1cm)
+  set text(font: "JetBrains Mono", size: 4.5pt, fill: luma(35))
+  align(center)[HALEIO · hello\@haleio.com · Adelaide, Australia]
+}
 
 // ── INDUSTRY DATA ──
 #let ind = if industry.contains("Manufactur") {
@@ -97,7 +97,7 @@
 #let sev = if score <= 40 { "CRITICAL" } else if score <= 55 { "SIGNIFICANT" } else if score <= 70 { "MODERATE" } else { "MANAGED" }
 #let sevCol = if score <= 40 { red } else if score <= 55 { amber } else if score <= 70 { neon } else { green }
 
-// ── PRE-COMPUTE MODULE COUNTS ──
+// ── HEADACHE FLAGS ──
 #let hasData = headacheLabels.any(l => l.contains("Data accuracy"))
 #let hasAdmin = headacheLabels.any(l => l.contains("Admin"))
 #let hasFollowup = headacheLabels.any(l => l.contains("follow-up") or l.contains("cracks"))
@@ -113,153 +113,162 @@
 
 // ═══════════════════════════ PAGE 1 ═══════════════════════════
 
-// ── LOGO ──
-#align(left, image("haleio-logo.svg", height: 18pt))
-
-#v(0.6cm)
-#edge
+#accent-bar
 #v(0.5cm)
 
-// ── HEADER ──
-#grid(columns: (2fr, 1fr), gutter: 0.5cm,
+// ── LOGO + HEADER ──
+#align(left, image("haleio-logo.svg", height: 16pt))
+#v(0.4cm)
+#h1[Revenue Performance Report]
+#v(0.25cm)
+#grid(columns: (auto, 1fr), gutter: 0.4cm,
   [
-    #h1[Revenue Performance Report]
-    #v(0.3cm)
-    #grid(columns: (auto, 1fr), gutter: 0.3cm,
-      [
-        #mono(size: 5pt, fill: neon)[PREPARED FOR]
-        #v(0.1cm)
-        #text(font: "Inter", size: 11pt, weight: "black", fill: t1, name)
-        #v(0.05cm)
-        #text(font: "Inter", size: 7.5pt, fill: neon, company)
-        #v(0.02cm)
-        #mono(size: 5pt, fill: t3)[#text(fill: neon-dim, industry)]
-      ],
-      [
-        #mono(size: 4.5pt, fill: t3)[SAMPLE]
-        #v(0.05cm)
-        #text(font: "Inter", size: 6pt, fill: t3, style: "italic")[Based on self-assessment benchmarks against #ind.sample]
-      ],
-    )
-    #small-spacer
-    // ── EXECUTIVE SUMMARY ──
-    #card[
-      #bdy(size: 7pt)[#name, this report compares your responses against #ind.sample and industry benchmarks (CSIRO, HubSpot, Deloitte, Gartner 2025–2026). It's not a full audit — it's a starting point, built from your self-assessment, to show where AI-driven workflow changes could have the biggest impact on your revenue operations.]
-      #small-spacer
-      #bdy(size: 6.5pt, fill: t3)[Three benchmarks tell the story: #ind.n faces a #text(fill: neon, ind.gap) AI adoption gap, #ind.decay annual data decay, and #ind.admin of team time lost to admin. The opportunities below are specific to #text(fill: neon, company).]
-      #small-spacer
-      #bdy(size: 6.5pt)[At an estimated #text(fill: neon, revenue) in revenue, that's approximately #text(fill: red, weight: "black", estTotal)/year in value eroding through data decay, admin drag, and missed opportunities. A paid diagnostic would pinpoint the exact figure from your actual CRM data.]
-    ]
+    #mono(size: 5pt, fill: neon)[PREPARED FOR]
+    #v(0.08cm)
+    #text(font: "Inter", size: 11pt, weight: "black", fill: t1, name)
+    #v(0.04cm)
+    #text(font: "Inter", size: 7pt, fill: neon, company)
+    #v(0.02cm)
+    #mono(size: 4.5pt, fill: t3)[#text(fill: neon-dim, industry)]
   ],
-  // ── SCORE (no sub-scores) ──
+  [
+    #mono(size: 4pt, fill: t3)[SAMPLE]
+    #v(0.04cm)
+    #text(font: "Inter", size: 5.5pt, fill: t3, style: "italic")[Based on self-assessment benchmarks against #ind.sample]
+  ],
+)
+
+#spacer
+
+// ── EXECUTIVE SUMMARY ──
+#card[
+  #bdy(size: 7pt)[#name, this report compares your responses against #ind.sample and industry benchmarks (CSIRO, HubSpot, Deloitte, Gartner 2025–2026). It's not a full audit — it's a starting point, built from your self-assessment, to show where AI-driven workflow changes could have the biggest impact on your revenue operations.]
+  #small-spacer
+  #bdy(size: 6pt, fill: t3)[#ind.n faces a #text(fill: neon, ind.gap) AI adoption gap, #ind.decay annual data decay, and #ind.admin of team time lost to admin. At an estimated #text(fill: neon, revenue) in revenue, that's approximately #text(fill: red, weight: "black", estTotal)/year in value eroding through data decay, admin drag, and missed opportunities.]
+]
+
+#spacer
+
+// ── SCORE + LEAK SECTION (side by side) ──
+#grid(columns: (auto, 1fr), gutter: 0.6cm,
+  // ── SCORE ──
   align(center + horizon, [
     #mono(size: 4.5pt)[PERFORMANCE SCORE]
     #v(0.2cm)
-    #block(width: 72pt, height: 72pt, fill: none, stroke: 2.5pt + luma(18), radius: 50%,
+    // Glow ring
+    #block(width: 90pt, height: 90pt, fill: none, stroke: 4pt + neon.transparentize(85%), radius: 50%,
       align(center + horizon,
-        text(font: "Inter", size: 26pt, weight: "black", fill: sevCol, str(score))
+        block(width: 86pt, height: 86pt, fill: none, stroke: 2pt + luma(25), radius: 50%,
+          align(center + horizon,
+            text(font: "Inter", size: 28pt, weight: "black", fill: sevCol, str(score))
+          )
+        )
       )
     )
-    #v(0.1cm)
-    #text(font: "JetBrains Mono", size: 5.5pt, fill: sevCol, weight: "black", sev)
+    #v(0.12cm)
+    #block(fill: sevCol.transparentize(85%), stroke: 0.5pt + sevCol.transparentize(65%), radius: 3pt, inset: (x: 10pt, y: 3pt),
+      text(font: "JetBrains Mono", size: 5pt, fill: sevCol, weight: "bold", sev)
+    )
   ]),
+  // ── ESTIMATED ANNUAL LEAK (hero) ──
+  [
+    #mono(size: 5pt)[ESTIMATED ANNUAL LEAK — #ind.n]
+    #v(0.03cm)
+    #bdy(size: 4.5pt, fill: t3)[Based on #revenue · Industry benchmarks · Estimate only]
+    #small-spacer
+    #card[
+      #grid(columns: (1fr, 1fr, 1fr), gutter: 0.15cm,
+        [
+          #set align(center)
+          #mono(size: 4pt, fill: red)[DATA DECAY]
+          #v(0.08cm)
+          #align(center, text(font: "Inter", size: 12pt, weight: "black", fill: red, estDecayLow + "–" + estDecayHigh))
+          #v(0.06cm)
+          #bdy(size: 4.5pt, fill: t3)[#ind.decay of CRM value lost per year]
+        ],
+        [
+          #set align(center)
+          #mono(size: 4pt, fill: amber)[ADMIN DRAG]
+          #v(0.08cm)
+          #align(center, text(font: "Inter", size: 12pt, weight: "black", fill: amber, estAdmin))
+          #v(0.06cm)
+          #bdy(size: 4.5pt, fill: t3)[#ind.admin of team hours on CRM admin]
+        ],
+        [
+          #set align(center)
+          #mono(size: 4pt, fill: green)[MISSED OPPORTUNITY]
+          #v(0.08cm)
+          #align(center, text(font: "Inter", size: 12pt, weight: "black", fill: green, estOppLow + "–" + estOppHigh))
+          #v(0.06cm)
+          #bdy(size: 4.5pt, fill: t3)[#ind.opp in upsells, cross-sells, referrals]
+        ],
+      )
+      #v(0.15cm)
+      #rect(width: 100%, height: 0.5pt, fill: luma(18))
+      #v(0.15cm)
+      #align(center, [
+        #text(font: "Inter", size: 7pt, weight: "black", fill: red, "ESTIMATED TOTAL LEAK")
+        #v(0.1cm)
+        #text(font: "Inter", size: 20pt, weight: "black", fill: red, estTotal)
+        #v(0.03cm)
+        #bdy(size: 5pt, fill: t3)[per year · Directional estimate — your CRM has the exact number]
+      ])
+    ]
+  ],
 )
-
-// ── KEY FINDING ──
-#neon-card[
-  #text(font: "Inter", size: 12pt, weight: "black", fill: t1)[#text(fill: neon)[Your] Highest-Impact Opportunity]
-  #v(0.2cm)
-  #bdy[Based on what you flagged first — _#headacheLabels.at(0)_ — #company's CRM is data-rich but process-poor. Automated AI workflows typically recover #text(fill: neon)[40–60% of admin time] and surface #text(fill: neon)[15–25% more revenue] from records that are already sitting in your system, waiting to be used.]
-  #small-spacer
-  #grid(columns: 2, gutter: 0.4cm,
-    metric-card("CRM DATA DECAY", ind.decay),
-    metric-card("TEAM ADMIN LOSS", ind.admin),
-  )
-  #v(0.2cm)
-  #text(font: "Inter", size: 5.5pt, fill: t3, style: "italic")[
-    Sources: CSIRO 2025 · HubSpot 2026 · Deloitte 2025 · Gartner 2025
-  ]
-]
 
 #spacer
 
-// ── ESTIMATED ANNUAL IMPACT ──
-#mono(size: 5.5pt)[ESTIMATED ANNUAL LEAK — #ind.n]
-#v(0.03cm)
-#bdy(size: 5pt, fill: t3)[Based on #revenue · Industry benchmarks · Estimate only]
-#small-spacer
-#card[
-  #grid(columns: (1fr, 1fr, 1fr), gutter: 0.2cm,
-    [
-      #set align(center)
-      #mono(size: 4.5pt, fill: red)[DATA DECAY]
-      #v(0.1cm)
-      #align(center, text(font: "Inter", size: 13pt, weight: "black", fill: red, estDecayLow + "–" + estDecayHigh))
-      #v(0.08cm)
-      #bdy(size: 5pt, fill: t3)[#ind.decay of CRM value lost per year]
-    ],
-    [
-      #set align(center)
-      #mono(size: 4.5pt, fill: amber)[ADMIN DRAG]
-      #v(0.1cm)
-      #align(center, text(font: "Inter", size: 13pt, weight: "black", fill: amber, estAdmin))
-      #v(0.08cm)
-      #bdy(size: 5pt, fill: t3)[#ind.admin of team hours on CRM admin]
-    ],
-    [
-      #set align(center)
-      #mono(size: 4.5pt, fill: green)[MISSED OPPORTUNITY]
-      #v(0.1cm)
-      #align(center, text(font: "Inter", size: 13pt, weight: "black", fill: green, estOppLow + "–" + estOppHigh))
-      #v(0.08cm)
-      #bdy(size: 5pt, fill: t3)[#ind.opp in upsells, cross-sells, referrals]
-    ],
-  )
-  #v(0.2cm)
+// ── RECOVERY STAT (replaces the old verbose section) ──
+#neon-card[
   #align(center, [
-    #text(font: "Inter", size: 7.5pt, weight: "black", fill: red, "ESTIMATED TOTAL LEAK")
-    #v(0.15cm)
-    #text(font: "Inter", size: 22pt, weight: "black", fill: red, estTotal)
-    #v(0.05cm)
-    #bdy(size: 5.5pt, fill: t3)[per year · Directional estimate — your CRM has the exact number]
+    #text(font: "Inter", size: 9pt, weight: "black", fill: t1)[AI typically recovers #text(fill: neon)[40–60% of admin time] and surfaces #text(fill: neon)[15–25% more revenue] from your existing CRM records.]
   ])
 ]
 
-#spacer
-
+#page-footer
 #pagebreak()
+
 // ═══════════════════════════ PAGE 2 ═══════════════════════════
 
-#h1[Your #text(fill: neon)[AI] Opportunity Map]
-#v(0.1cm)
-#bdy(size: 7pt, fill: t3)[How AI transforms each challenge you reported — tailored for #industry]
+#accent-bar
+#v(0.45cm)
+
+#text(font: "Inter", size: 16pt, weight: "black", fill: t1)[Your #text(fill: neon)[AI] Opportunity Map]
+#v(0.08cm)
+#bdy(size: 6.5pt, fill: t3)[How AI transforms each challenge you reported — tailored for #industry]
 
 #v(0.3cm)
 
-// ── AI MODULE ──
+// ── AI MODULE (vertical neon bar style) ──
 #let ai-module(n, title, problem, solution, benefit, example) = {
-  card[
-    #grid(columns: (auto, 1fr), gutter: 0.4cm,
+  block(width: 100%, fill: card-bg, stroke: 0.5pt + luma(18), radius: 4pt, inset: 0pt,
+    grid(columns: (auto, 1fr), gutter: 0pt,
+      rect(width: 3.5pt, height: auto, fill: neon, radius: 2pt),
       [
-        #block(width: 26pt, height: 26pt, fill: neon, align(center + horizon,
-          text(font: "Inter", size: 10pt, weight: "black", fill: bg-dark, str(n))
-        ))
-        #v(0.15cm)
-        #mono(size: 5pt, fill: neon)[FIX]
-      ],
-      [
-        #text(font: "Inter", size: 9pt, weight: "black", fill: t1)[#title]
-        #v(0.15cm)
-        #bdy(size: 7pt, fill: t3)[PROBLEM:] #bdy[#problem]
-        #v(0.1cm)
-        #bdy(size: 7pt, fill: neon)[AI SOLUTION:] #bdy(fill: t1)[#solution]
-        #v(0.1cm)
-        #text(font: "Inter", size: 6.5pt, fill: green)[✓ #benefit]
-        #v(0.05cm)
-        #text(font: "Inter", size: 6pt, fill: t3, style: "italic")[Example: #example]
+        #v(0.3cm)
+        #grid(columns: (auto, 1fr), gutter: 0.3cm,
+          [
+            #v(0.05cm)
+            #mono(size: 4.5pt, fill: neon)[FIX #text(fill: t3, str(n))]
+          ],
+          [
+            #text(font: "Inter", size: 8.5pt, weight: "black", fill: t1)[#title]
+            #v(0.1cm)
+            #bdy(size: 6.5pt, fill: t3)[PROBLEM:] #bdy(size: 6.5pt)[#problem]
+            #v(0.06cm)
+            #bdy(size: 6.5pt, fill: neon)[SOLUTION:] #bdy(size: 6.5pt, fill: t1)[#solution]
+            #v(0.06cm)
+            #text(font: "Inter", size: 6pt, fill: green)[✓ #benefit]
+            #v(0.03cm)
+            #text(font: "Inter", size: 5.5pt, fill: t3, style: "italic")[Example: #example]
+          ]
+        )
+        #v(0.25cm)
       ]
     )
-  ]
+  )
+  small-spacer
 }
 
 // Data accuracy
@@ -270,7 +279,6 @@
     "80% less manual data entry. Every record becomes a lead source, not a liability.",
     "A welding distributor surfaced +$1M in upsells from their existing Sage 50 data — no new records, no new hires."
   )
-  small-spacer
 }
 
 // Admin overhead
@@ -281,7 +289,6 @@
     "Frees 12+ hours per week per person. One manufacturer cut claims processing from 21 days to 4.",
     "Warranty manufacturer: 21-day manual triage → 4-day automated workflow. No new hires needed."
   )
-  small-spacer
 }
 
 // Follow-up
@@ -289,10 +296,9 @@
   ai-module(n2b, "No Deal Goes Cold Again",
     "CSO Insights (2025): automated alerts recover 2–3 stalled deals per rep per month. In " + ind.n + ", the most common leak is simply nobody being reminded.",
     "AI monitors your pipeline in real time. Flags stalled deals. Drafts personalised follow-ups. Alerts the right person on Slack or Teams before the opportunity goes cold.",
-    "Recovers \\$40k–\\$120k per rep per year. One distributor recovered \\$180k in 60 days.",
+    "Recovers $40k–$120k per rep per year. One distributor recovered $180k in 60 days.",
     "Customer Success team: zero post-sale process → 90-day automated triggers pushed NRR from 97% to 115%."
   )
-  small-spacer
 }
 
 // Inconsistent
@@ -303,7 +309,6 @@
     "CRM adoption improves 40–60% with AI guidance vs top-down enforcement.",
     "Same methodology behind all three HALEIO client outcomes referenced above."
   )
-  small-spacer
 }
 
 // Visibility
@@ -314,68 +319,95 @@
     "Pipeline review cut from 4 hours to 15 minutes. Decisions made on live data, not exports.",
     "Reports that used to consume a full day now generate automatically every morning."
   )
-  small-spacer
 }
 
 #v(0.15cm)
 
-// ── BEFORE vs AFTER ──
-#mono(size: 6pt)[BEFORE vs AFTER AI — #ind.n]
+// ── BEFORE vs AFTER (upgraded) ──
+#mono(size: 5.5pt)[BEFORE vs AFTER AI — #ind.n]
 #small-spacer
 
-#let comp-row(metric, before, after) = {
-  grid(columns: (1.5fr, 1.7fr, 1.7fr), gutter: 0.2cm,
-    text(font: "Inter", size: 6.5pt, weight: "bold", fill: t2, metric),
-    text(font: "Inter", size: 6.5pt, fill: red, before),
-    text(font: "Inter", size: 6.5pt, fill: green, "→ " + after),
-  )
-}
-
 #card[
-  #comp-row("Data Accuracy", ind.decay + " annual decay", "85-95% stable")
-  #v(0.15cm)
-  #comp-row("Admin Time", adminHours + " manual CRM", "60-80% reduction")
-  #v(0.15cm)
-  #comp-row("Pipeline Visibility", "Weekly reports, stale", "Real-time, automated")
-  #v(0.15cm)
-  #comp-row("Follow-up Rate", "Missed opportunities", "0-2hr auto-response")
-  #v(0.15cm)
-  #comp-row("Team Consistency", "Every rep, own system", "AI-guided standard")
+  #grid(columns: (1.8fr, 1.3fr, 1.3fr), gutter: 0.15cm,
+    text(font: "Inter", size: 6pt, weight: "bold", fill: t2, ""),
+    align(center, text(font: "Inter", size: 5.5pt, weight: "black", fill: red, "BEFORE")),
+    align(center, text(font: "Inter", size: 5.5pt, weight: "black", fill: neon, "AFTER")),
+  )
+  #v(0.1cm)
+  #rect(width: 100%, height: 0.5pt, fill: luma(18))
+  #v(0.1cm)
+  #grid(columns: (1.8fr, 1.3fr, 1.3fr), gutter: 0.15cm,
+    text(font: "Inter", size: 6pt, weight: "bold", fill: t2, "Data Accuracy"),
+    align(center, text(font: "Inter", size: 6pt, fill: red, ind.decay + " annual decay")),
+    align(center, text(font: "Inter", size: 6pt, fill: green, "85–95% stable")),
+  )
+  #v(0.08cm)
+  #grid(columns: (1.8fr, 1.3fr, 1.3fr), gutter: 0.15cm,
+    text(font: "Inter", size: 6pt, weight: "bold", fill: t2, "Admin Time"),
+    align(center, text(font: "Inter", size: 6pt, fill: red, adminHours + " manual CRM")),
+    align(center, text(font: "Inter", size: 6pt, fill: green, "60–80% reduction")),
+  )
+  #v(0.08cm)
+  #grid(columns: (1.8fr, 1.3fr, 1.3fr), gutter: 0.15cm,
+    text(font: "Inter", size: 6pt, weight: "bold", fill: t2, "Pipeline Visibility"),
+    align(center, text(font: "Inter", size: 6pt, fill: red, "Weekly reports, stale")),
+    align(center, text(font: "Inter", size: 6pt, fill: green, "Real-time, automated")),
+  )
+  #v(0.08cm)
+  #grid(columns: (1.8fr, 1.3fr, 1.3fr), gutter: 0.15cm,
+    text(font: "Inter", size: 6pt, weight: "bold", fill: t2, "Follow-up Rate"),
+    align(center, text(font: "Inter", size: 6pt, fill: red, "Missed opportunities")),
+    align(center, text(font: "Inter", size: 6pt, fill: green, "0–2hr auto-response")),
+  )
+  #v(0.08cm)
+  #grid(columns: (1.8fr, 1.3fr, 1.3fr), gutter: 0.15cm,
+    text(font: "Inter", size: 6pt, weight: "bold", fill: t2, "Team Consistency"),
+    align(center, text(font: "Inter", size: 6pt, fill: red, "Every rep, own system")),
+    align(center, text(font: "Inter", size: 6pt, fill: green, "AI-guided standard")),
+  )
 ]
 
-
+#page-footer
 #pagebreak()
 
 // ═══════════════════════════ PAGE 3 ═══════════════════════════
 
-#h1[Your #text(fill: neon)[90-Day] AI Roadmap]
-#v(0.1cm)
-#bdy(size: 7pt, fill: t3)[Fixed scope. Fixed timeline. Fixed fee. Four phases. You own everything we build.]
+#accent-bar
+#v(0.45cm)
 
-#v(0.4cm)
+#text(font: "Inter", size: 16pt, weight: "black", fill: t1)[Your #text(fill: neon)[90-Day] AI Roadmap]
+#v(0.08cm)
+#bdy(size: 6.5pt, fill: t3)[Fixed scope. Fixed timeline. Fixed fee. Four phases. You own everything we build.]
+
+#v(0.3cm)
 
 // ── PHASE CARDS ──
 #let phase(pn, days, title, desc) = block(
-  width: 100%, fill: card-bg, stroke: 0.3pt + luma(15), radius: 3pt, inset: 12pt,
-  [
-    #grid(columns: (auto, 1fr), gutter: 0.35cm,
-      align(center + horizon, [
-        #block(width: 26pt, height: 26pt, fill: neon,
-          align(center + horizon, text(font: "Inter", size: 10pt, weight: "black", fill: bg-dark, str(pn)))
-        )
-        #v(0.12cm)
-        #mono(size: 4.5pt, fill: neon, days)
-      ]),
-      [
-        #text(font: "Inter", size: 9pt, weight: "black", fill: t1)[#title]
-        #v(0.1cm)
-        #bdy(size: 6.5pt)[#desc]
-      ]
-    )
-  ]
+  width: 100%, fill: card-bg, stroke: 0.5pt + luma(18), radius: 4pt, inset: 0pt,
+  grid(columns: (auto, 1fr), gutter: 0pt,
+    rect(width: 3.5pt, height: auto, fill: neon, radius: 2pt),
+    [
+      #v(0.25cm)
+      #grid(columns: (auto, 1fr), gutter: 0.3cm,
+        align(center + horizon, [
+          #block(width: 22pt, height: 22pt, fill: neon, radius: 3pt,
+            align(center + horizon, text(font: "Inter", size: 9pt, weight: "black", fill: bg-dark, str(pn)))
+          )
+          #v(0.08cm)
+          #mono(size: 4pt, fill: neon, days)
+        ]),
+        [
+          #text(font: "Inter", size: 8pt, weight: "black", fill: t1)[#title]
+          #v(0.06cm)
+          #bdy(size: 6pt)[#desc]
+        ]
+      )
+      #v(0.2cm)
+    ]
+  )
 )
 
-#grid(columns: 2, gutter: 0.3cm,
+#grid(columns: 2, gutter: 0.25cm,
   phase(1, "WK 1-4", "Diagnostic & Foundation",
     "Full CRM audit. Every record checked. Leaks quantified against real data. AI infrastructure deployed — private, sovereign, Australian-hosted."
   ),
@@ -384,9 +416,9 @@
   ),
 )
 
-#v(0.3cm)
+#v(0.2cm)
 
-#grid(columns: 2, gutter: 0.3cm,
+#grid(columns: 2, gutter: 0.25cm,
   phase(3, "WK 9-10", "Stress Test & Validate",
     "Your team sees the engine working on real CRM data. Edge cases tested. Documentation written. No surprises on handover day."
   ),
@@ -395,30 +427,34 @@
   ),
 )
 
-#v(0.3cm)
+#v(0.4cm)
 
-// ── CTA ──
-#neon-card[
+// ── FOUNDER NOTE + HEASHOT + CTA ──
+#card[
+  #grid(columns: (auto, 1fr), gutter: 0.4cm,
+    // Headshot
+    align(center + horizon, [
+      #block(width: 55pt, height: 55pt, radius: 50%, clip: true,
+        image("darren-headshot.jpg", width: 100%, height: 100%)
+      )
+    ]),
+    // Note
+    [
+      #text(font: "Inter", size: 7pt, weight: "bold", fill: neon, style: "italic")["The real number is always worse than you think — and better than you expect."]
+      #v(0.1cm)
+      #bdy(size: 6pt)[I've run this diagnostic on CRMs ranging from 50 to 50,000 records. The leaks are always bigger than the spreadsheet says, and the fixes are always simpler than the team assumes. If you want to know exactly what's sitting in your CRM — the dollars, the delays, the deals you're leaving on the table — book a diagnostic. I'll show you everything.]
+      #v(0.08cm)
+      #bdy(size: 6pt, fill: neon)[Darren Hale] #bdy(size: 5.5pt, fill: t3)[Founder, HALEIO]
+    ],
+  )
+  #v(0.2cm)
+  #accent-bar
+  #v(0.2cm)
   #align(center, [
-    #h2[Get the Real Numbers from Your CRM]
-    #v(0.2cm)
-    #bdy(size: 7.5pt)[This report gives you a directional view based on your self-assessment and industry benchmarks. The actual numbers — the exact dollar value of every leak, every delay, every missed follow-up — are sitting in your CRM right now.]
-    #v(0.35cm)
-    #text(font: "Inter", size: 14pt, weight: "black", fill: neon)[Book a Diagnostic · \$4,950]
-    #v(0.15cm)
-    #bdy(size: 7pt, fill: t3)[Founding rate (reg. \$15,000) · Limited availability · Delivered in 5 business days]
-    #v(0.15cm)
-    #mono(size: 5pt)[haleio.com · hello\@haleio.com · Adelaide, Australia]
+    #text(font: "Inter", size: 13pt, weight: "black", fill: neon)[Book a Diagnostic · \$4,950]
+    #v(0.08cm)
+    #bdy(size: 6.5pt, fill: t3)[Founding rate (reg. \$15,000) · Delivered in 5 business days · haleio.com/discovery]
   ])
 ]
 
-#v(0.4cm)
-
-// ── SOURCES ──
-#set text(font: "JetBrains Mono", size: 4.5pt, fill: luma(35))
-#align(center, [
-  Sources: CSIRO AI Adoption in Australian Industry 2025 · HubSpot Sales Benchmarks 2026 ·
-  Deloitte AI in B2B Distribution & Manufacturing 2025 · CSO Insights 2025 · Gartner 2025.
-  Industry benchmarks from public research. Results vary. Not a guarantee of specific outcomes.
-  Prepared in Adelaide, Australia for #company.
-])
+#page-footer
