@@ -66,7 +66,7 @@
 } else if industry.contains("Wholesale") or industry.contains("Distribution") {
   (n: "Wholesale & Distribution", sample: "600+ distributors", gap: "3.1×", decay: "30–38%", admin: "35%", opp: "18–25%",
    ai: "Re-order triggers, customer segmentation, quote follow-ups.",
-   detail: "Distribution AI gap — fastest data decay of any sector (Deloitte 2025).", admn: "of team time on manual processing (HubSpot 2026).")
+   detail: "Distribution AI gap: fastest data decay of any sector (Deloitte 2025).", admn: "of team time on manual processing (HubSpot 2026).")
 } else if industry.contains("Professional Service") {
   (n: "Professional Services", sample: "400+ firms", gap: "2.0×", decay: "24–30%", admin: "28%", opp: "12–18%",
    ai: "Client lifecycle automation, referral tracking, engagement scoring.",
@@ -74,7 +74,7 @@
 } else if industry.contains("SaaS") or industry.contains("Technology") {
   (n: "Technology & SaaS", sample: "1,200+ firms", gap: "1.0×", decay: "22–28%", admin: "24%", opp: "8–14%",
    ai: "Deal scoring, churn prediction, automated enrichment, pipeline alerts.",
-   detail: "SaaS leads AI adoption — benchmark, not laggard.", admn: "of selling time on CRM admin (HubSpot 2026).")
+   detail: "SaaS leads AI adoption (benchmark, not laggard).", admn: "of selling time on CRM admin (HubSpot 2026).")
 } else if industry.contains("Construction") or industry.contains("Trades") {
   (n: "Construction & Trades", sample: "500+ firms", gap: "3.5×", decay: "32–40%", admin: "38%", opp: "20–30%",
    ai: "Quote-to-project automation, re-quote triggers, sub tracking.",
@@ -131,7 +131,7 @@
 
 // ── EXECUTIVE SUMMARY ──
 #card[
-  #bdy(size: 8pt)[#name, this report compares your responses against #ind.sample and industry benchmarks (CSIRO, HubSpot, Deloitte, Gartner 2025–2026). It's not a full audit — it's a starting point, built from your self-assessment, to show where AI-driven workflow changes could have the biggest impact on your revenue performance.]
+  #bdy(size: 8pt)[#name, this report compares your responses against #ind.sample and industry benchmarks (CSIRO, HubSpot, Deloitte, Gartner 2025–2026). It's not a full audit. It's a starting point, built from your self-assessment, to show where AI-driven workflow changes could have the biggest impact on your revenue performance.]
   #small-spacer
   #bdy(size: 8pt)[#ind.n faces a #text(fill: neon, ind.gap) AI adoption gap, #ind.decay annual data decay, and #ind.admin of team time lost to admin. At an estimated #text(fill: neon, revenue) in revenue, that's approximately #text(fill: red, weight: "black", estTotal)/year in value eroding through data decay, admin drag, and missed opportunities.]
 ]
@@ -161,7 +161,7 @@
   ]),
   // ── ESTIMATED ANNUAL LEAK (hero) ──
   [
-    #mono(size: 5pt)[ESTIMATED ANNUAL LEAK — #ind.n]
+    #mono(size: 5pt)[ESTIMATED ANNUAL LEAK: #ind.n]
     #v(0.03cm)
     #bdy(size: 4.5pt, fill: t3)[Based on #revenue · Industry benchmarks · Estimate only]
     #small-spacer
@@ -200,7 +200,7 @@
         #v(0.1cm)
         #text(font: "Inter", size: 20pt, weight: "black", fill: red, estTotal)
         #v(0.03cm)
-        #bdy(size: 5pt, fill: t3)[per year · Directional estimate — your CRM has the exact number]
+        #bdy(size: 5pt, fill: t3)[per year · Directional estimate. Your CRM has the exact number]
       ])
     ]
   ],
@@ -225,7 +225,7 @@
 
 #text(font: "Inter", size: 16pt, weight: "black", fill: t1)[Your #text(fill: neon)[AI] Opportunity Map]
 #v(0.08cm)
-#bdy(size: 6.5pt, fill: t3)[How AI transforms each challenge you reported — tailored for #industry]
+#bdy(size: 6.5pt, fill: t3)[How AI transforms each challenge you reported, tailored for #industry]
 
 #v(0.3cm)
 
@@ -259,10 +259,10 @@
 // Data accuracy
 #if hasData {
   ai-module(n1, "CRM Data That Actually Works",
-    ind.n + " CRMs decay at " + ind.decay + " per year. " + yearsOnCrm + " of accumulated records — expired contacts, duplicates, stale data — quietly eroding your pipeline.",
+    ind.n + " CRMs decay at " + ind.decay + " per year. " + yearsOnCrm + " of accumulated records. Expired contacts, duplicates, stale data quietly eroding your pipeline.",
     "We clean and enrich every record using AI that runs on your infrastructure. Private. Sovereign. Yours. Within 30 days, accuracy typically lifts from 65% to 90%+.",
     "80% less manual data entry. Every record becomes a lead source, not a liability.",
-    "A welding distributor surfaced +$1M in upsells from their existing Sage 50 data — no new records, no new hires."
+    "A welding distributor surfaced +$1M in upsells from their existing Sage 50 data, no new records or new hires."
   )
 }
 
@@ -270,7 +270,7 @@
 #if hasAdmin {
   ai-module(n2a, "Admin Workflows That Run Themselves",
     adminHours + " on CRM admin. " + ind.admn,
-    "AI agents handle data entry, report generation, call logging, and field updates automatically. Your team focuses on revenue work — the AI keeps the CRM current.",
+    "AI agents handle data entry, report generation, call logging, and field updates automatically. Your team focuses on revenue work. The AI keeps the CRM current.",
     "Frees 12+ hours per week per person. One manufacturer cut claims processing from 21 days to 4.",
     "Warranty manufacturer: 21-day manual triage → 4-day automated workflow. No new hires needed."
   )
@@ -289,8 +289,8 @@
 // Inconsistent
 #if hasProcess {
   ai-module(n3, "One Process. Everyone Follows It.",
-    "Inconsistent CRM usage is the #1 cause of bad data in " + industry + ". When every rep works differently, management flies blind — and pipeline forecasts become guesswork.",
-    "AI-guided workflows enforce consistent entry, stage progression, and follow-up cadence. Reps get nudges, not mandates — adoption improves because the system helps, not because someone enforces.",
+    "Inconsistent CRM usage is the #1 cause of bad data in " + industry + ". When every rep works differently, management flies blind and pipeline forecasts become guesswork.",
+    "AI-guided workflows enforce consistent entry, stage progression, and follow-up cadence. Reps get nudges, not mandates. Adoption improves because the system helps, not because someone enforces.",
     "CRM adoption improves 40–60% with AI guidance vs top-down enforcement.",
     "Same methodology behind all three HALEIO client outcomes referenced above."
   )
@@ -300,7 +300,7 @@
 #if hasVis {
   ai-module(n4, "See Everything. In Real Time.",
     "Managers in " + industry + " rely on weekly spreadsheets. By the time numbers reach leadership, they're already stale. Decisions end up based on last week's reality.",
-    "AI dashboards update continuously from live CRM. Pipeline health, rep activity, deal velocity — real time, zero manual work. Your weekly pipeline review drops from 4 hours to 15 minutes.",
+    "AI dashboards update continuously from live CRM. Pipeline health, rep activity, deal velocity in real time, zero manual work. Your weekly pipeline review drops from 4 hours to 15 minutes.",
     "Pipeline review cut from 4 hours to 15 minutes. Decisions made on live data, not exports.",
     "Reports that used to consume a full day now generate automatically every morning."
   )
@@ -309,7 +309,7 @@
 #v(0.15cm)
 
 // ── BEFORE vs AFTER (upgraded) ──
-#mono(size: 5.5pt)[BEFORE vs AFTER AI — #ind.n]
+#mono(size: 5.5pt)[BEFORE vs AFTER AI: #ind.n]
 #small-spacer
 
 #card[
@@ -388,7 +388,7 @@
 
 #grid(columns: 2, gutter: 0.25cm,
   phase(1, "WK 1-4", "Diagnostic & Foundation",
-    "Full CRM audit. Every record checked. Leaks quantified against real data. AI infrastructure deployed — private, sovereign, Australian-hosted."
+    "Full CRM audit. Every record checked. Leaks quantified against real data. AI infrastructure deployed. Private, sovereign, Australian-hosted."
   ),
   phase(2, "WK 5–8", "Automation Build",
     "Custom AI workflows deployed for your " + str(headacheLabels.len()) + " priority areas. Lead triage, enrichment, deal alerts, Slack/Teams. Live on your data."
@@ -402,14 +402,14 @@
     "Your team sees the engine working on real CRM data. Edge cases tested. Documentation written. No surprises on handover day."
   ),
   phase(4, "WK 11–13", "Training & Handover",
-    "Your team trained. Full documentation delivered. Quarterly reviews optional. You own the workflows, the logic, the IP — permanently."
+    "Your team trained. Full documentation delivered. Quarterly reviews optional. You own the workflows, the logic, the IP permanently."
   ),
 )
 
 #v(0.35cm)
 
 // ── PROOF POINTS ──
-#mono(size: 5.5pt)[PROVEN RESULTS — REAL CLIENT OUTCOMES]
+#mono(size: 5.5pt)[PROVEN RESULTS: REAL CLIENT OUTCOMES]
 #small-spacer
 #grid(columns: 3, gutter: 0.2cm,
   block(fill: card-bg, stroke: 0.5pt + luma(18), radius: 4pt, inset: 10pt, [
@@ -448,9 +448,9 @@
     ]),
     // Note
     [
-      #text(font: "Inter", size: 7pt, weight: "bold", fill: neon, style: "italic")["The real number is always worse than you think — and better than you expect."]
+      #text(font: "Inter", size: 7pt, weight: "bold", fill: neon, style: "italic")["The real number is always worse than you think, and better than you expect."]
       #v(0.1cm)
-      #bdy(size: 6pt)[I've run this diagnostic on CRMs ranging from 50 to 50,000 records. The leaks are always bigger than the spreadsheet says, and the fixes are always simpler than the team assumes. If you want to know exactly what's sitting in your CRM — the dollars, the delays, the deals you're leaving on the table — book a diagnostic. I'll show you everything.]
+      #bdy(size: 6pt)[I've run this diagnostic on CRMs ranging from 50 to 50,000 records. The leaks are always bigger than the spreadsheet says, and the fixes are always simpler than the team assumes. If you want to know exactly what's sitting in your CRM. The dollars, the delays, the deals you're leaving on the table. Book a diagnostic. I'll show you everything.]
       #v(0.08cm)
       #bdy(size: 6pt, fill: neon)[Darren Hale] #bdy(size: 5.5pt, fill: t3)[Founder, HALEIO]
     ],
@@ -465,7 +465,7 @@
       )
     ]
     #v(0.1cm)
-    #bdy(size: 7pt, fill: t3)[Was #strike[#text(fill: red, style: "italic")[\$15,000]] — Founding rate ends soon. Delivered in 5 business days.]
+    #bdy(size: 7pt, fill: t3)[Was #strike[#text(fill: red, style: "italic")[\$15,000]]. Founding rate ends soon. Delivered in 5 business days.]
   ])
 ]
 
