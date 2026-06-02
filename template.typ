@@ -20,7 +20,7 @@
 #let estSample = "850+ manufacturers"
 
 // ── SETUP ──
-#set page(paper: "a4", margin: (top: 2.2cm, bottom: 2cm, left: 2cm, right: 2cm), fill: rgb("#040404"))
+#set page(paper: "a4", margin: (top: 2cm, bottom: 1.8cm, left: 2cm, right: 2cm), fill: rgb("#040404"))
 #set text(font: "Inter", size: 10pt, fill: luma(220))
 
 // ── COLOURS ──
@@ -38,8 +38,8 @@
 
 // ── HELPERS ──
 #let edge = rect(width: 100%, height: 2.5pt, fill: neon)
-#let spacer = { v(0.4cm) }
-#let small-spacer = { v(0.25cm) }
+#let spacer = { v(0.3cm) }
+#let small-spacer = { v(0.15cm) }
 
 #let card(body) = block(width: 100%, fill: card-bg, stroke: 0.3pt + luma(15), radius: 3pt, inset: 14pt, body)
 #let neon-card(body) = block(width: 100%, fill: neo, stroke: 0.4pt + neon-dim, radius: 3pt, inset: 14pt, body)
@@ -197,54 +197,43 @@
 #spacer
 
 // ── ESTIMATED ANNUAL IMPACT ──
-#mono(size: 6pt)[ESTIMATED ANNUAL LEAK — #ind.n]
-#v(0.05cm)
-#bdy(size: 5.5pt, fill: t3)[Based on #revenue revenue · Industry benchmarks · Estimate only]
+#mono(size: 5.5pt)[ESTIMATED ANNUAL LEAK — #ind.n]
+#v(0.03cm)
+#bdy(size: 5pt, fill: t3)[Based on #revenue · Industry benchmarks · Estimate only]
 #small-spacer
 #card[
-  #grid(columns: 3, gutter: 0.3cm,
+  #grid(columns: 3, gutter: 0.2cm,
     align(center, [
-      #mono(size: 5pt, fill: red)[DATA DECAY]
-      #v(0.15cm)
-      #text(font: "Inter", size: 15pt, weight: "black", fill: red, estDecayLow + "–" + estDecayHigh)
+      #mono(size: 4.5pt, fill: red)[DATA DECAY]
       #v(0.1cm)
-      #bdy(size: 5.5pt, fill: t3)[#ind.decay of CRM value lost per year]
+      #text(font: "Inter", size: 13pt, weight: "black", fill: red, estDecayLow + "–" + estDecayHigh)
+      #v(0.08cm)
+      #bdy(size: 5pt, fill: t3)[#ind.decay of CRM value lost per year]
     ]),
     align(center, [
-      #mono(size: 5pt, fill: amber)[ADMIN DRAG]
-      #v(0.15cm)
-      #text(font: "Inter", size: 15pt, weight: "black", fill: amber, estAdmin)
+      #mono(size: 4.5pt, fill: amber)[ADMIN DRAG]
       #v(0.1cm)
-      #bdy(size: 5.5pt, fill: t3)[#ind.admin of team hours on CRM admin]
+      #text(font: "Inter", size: 13pt, weight: "black", fill: amber, estAdmin)
+      #v(0.08cm)
+      #bdy(size: 5pt, fill: t3)[#ind.admin of team hours on CRM admin]
     ]),
     align(center, [
-      #mono(size: 5pt, fill: green)[MISSED OPPORTUNITY]
-      #v(0.15cm)
-      #text(font: "Inter", size: 15pt, weight: "black", fill: green, estOppLow + "–" + estOppHigh)
+      #mono(size: 4.5pt, fill: green)[MISSED OPPORTUNITY]
       #v(0.1cm)
-      #bdy(size: 5.5pt, fill: t3)[#ind.opp in upsells, cross-sells, referrals]
+      #text(font: "Inter", size: 13pt, weight: "black", fill: green, estOppLow + "–" + estOppHigh)
+      #v(0.08cm)
+      #bdy(size: 5pt, fill: t3)[#ind.opp in upsells, cross-sells, referrals]
     ]),
   )
-  #v(0.2cm)
-  #edge
-  #v(0.2cm)
+  #v(0.15cm)
   #align(center, [
-    #text(font: "Inter", size: 10.5pt, weight: "black", fill: t1)[Estimated total leak: #text(fill: red, estTotal)/year]
-    #v(0.05cm)
-    #bdy(size: 5.5pt, fill: t3)[This is a directional estimate. The exact number lives in your CRM. A paid diagnostic finds it.]
+    #text(font: "Inter", size: 9pt, weight: "black", fill: red)[Estimated total leak: #text(fill: red, estTotal)/year]
+    #v(0.03cm)
+    #bdy(size: 5pt, fill: t3)[Directional estimate. The exact number lives in your CRM.]
   ])
 ]
 
 #spacer
-
-// ── AT A GLANCE ──
-#mono(size: 6pt)[AT A GLANCE]
-#small-spacer
-#grid(columns: 3, gutter: 0.3cm,
-  card[#mono(size: 5pt)[INDUSTRY] #v(0.1cm) #text(font: "Inter", size: 10pt, weight: "black", fill: neon, industry)],
-  card[#mono(size: 5pt)[DATA MATURITY] #v(0.1cm) #text(font: "Inter", size: 10pt, weight: "black", fill: neon, yearsOnCrm)],
-  card[#mono(size: 5pt)[ADMIN LOAD] #v(0.1cm) #text(font: "Inter", size: 10pt, weight: "black", fill: neon, adminHours)],
-)
 
 #pagebreak()
 // ═══════════════════════════ PAGE 2 ═══════════════════════════
@@ -253,7 +242,7 @@
 #v(0.1cm)
 #bdy(size: 7pt, fill: t3)[How AI transforms each challenge you reported — tailored for #industry]
 
-#v(0.5cm)
+#v(0.3cm)
 
 // ── AI MODULE ──
 #let ai-module(n, title, problem, solution, benefit, example) = {
@@ -336,7 +325,7 @@
   small-spacer
 }
 
-#v(0.3cm)
+#v(0.15cm)
 
 // ── BEFORE vs AFTER ──
 #mono(size: 6pt)[BEFORE vs AFTER AI — #ind.n]
@@ -414,7 +403,7 @@
   ),
 )
 
-#v(0.5cm)
+#v(0.3cm)
 
 // ── CTA ──
 #neon-card[
