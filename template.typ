@@ -60,31 +60,31 @@
 
 // ── INDUSTRY DATA ──
 #let ind = if industry.contains("Manufactur") {
-  (n: "MANUFACTURING", sample: "850+ manufacturers", gap: "2.5×", decay: "28–34%", admin: "31%", opp: "15–22%",
+  (n: "Manufacturing", sample: "850+ manufacturers", gap: "2.5×", decay: "28–34%", admin: "31%", opp: "15–22%",
    ai: "Order re-activation, warranty automation, gap detection.",
    detail: "Manufacturing AI adoption lags SaaS by 2.5× (CSIRO 2025).", admn: "of rep time lost to admin (HubSpot 2026).")
 } else if industry.contains("Wholesale") or industry.contains("Distribution") {
-  (n: "WHOLESALE & DISTRIBUTION", sample: "600+ distributors", gap: "3.1×", decay: "30–38%", admin: "35%", opp: "18–25%",
+  (n: "Wholesale & Distribution", sample: "600+ distributors", gap: "3.1×", decay: "30–38%", admin: "35%", opp: "18–25%",
    ai: "Re-order triggers, customer segmentation, quote follow-ups.",
    detail: "Distribution AI gap — fastest data decay of any sector (Deloitte 2025).", admn: "of team time on manual processing (HubSpot 2026).")
 } else if industry.contains("Professional Service") {
-  (n: "PROFESSIONAL SERVICES", sample: "400+ firms", gap: "2.0×", decay: "24–30%", admin: "28%", opp: "12–18%",
+  (n: "Professional Services", sample: "400+ firms", gap: "2.0×", decay: "24–30%", admin: "28%", opp: "12–18%",
    ai: "Client lifecycle automation, referral tracking, engagement scoring.",
    detail: "Services AI adoption growing fast but still behind SaaS.", admn: "of billable time lost to admin (HubSpot 2026).")
 } else if industry.contains("SaaS") or industry.contains("Technology") {
-  (n: "TECHNOLOGY & SAAS", sample: "1,200+ firms", gap: "1.0×", decay: "22–28%", admin: "24%", opp: "8–14%",
+  (n: "Technology & SaaS", sample: "1,200+ firms", gap: "1.0×", decay: "22–28%", admin: "24%", opp: "8–14%",
    ai: "Deal scoring, churn prediction, automated enrichment, pipeline alerts.",
    detail: "SaaS leads AI adoption — benchmark, not laggard.", admn: "of selling time on CRM admin (HubSpot 2026).")
 } else if industry.contains("Construction") or industry.contains("Trades") {
-  (n: "CONSTRUCTION & TRADES", sample: "500+ firms", gap: "3.5×", decay: "32–40%", admin: "38%", opp: "20–30%",
+  (n: "Construction & Trades", sample: "500+ firms", gap: "3.5×", decay: "32–40%", admin: "38%", opp: "20–30%",
    ai: "Quote-to-project automation, re-quote triggers, sub tracking.",
    detail: "Largest AI adoption gap of any B2B sector (CSIRO 2025).", admn: "of office time on paperwork (HubSpot 2026).")
 } else if industry.contains("Health") {
-  (n: "HEALTHCARE", sample: "300+ providers", gap: "2.8×", decay: "30–36%", admin: "30%", opp: "10–16%",
+  (n: "Healthcare", sample: "300+ providers", gap: "2.8×", decay: "30–36%", admin: "30%", opp: "10–16%",
    ai: "Referral automation, patient re-engagement, compliance trails.",
    detail: "Healthcare AI gap driven by compliance complexity (Deloitte 2025).", admn: "of clinical admin on non-patient CRM work.")
 } else {
-  (n: "BUSINESS SERVICES", sample: "1,000+ firms", gap: "2.2×", decay: "26–32%", admin: "29%", opp: "10–20%",
+  (n: "Business Services", sample: "1,000+ firms", gap: "2.2×", decay: "26–32%", admin: "29%", opp: "10–20%",
    ai: "Workflow automation, data enrichment, follow-up sequencing.",
    detail: "General B2B AI gap vs SaaS (CSIRO 2025).", admn: "of team time lost to CRM admin.")
 }
@@ -217,7 +217,7 @@
   )
   #v(0.2cm)
   #align(center, [
-    #mono(size: 5pt, fill: t3)[ESTIMATED TOTAL LEAK]
+    #text(font: "Inter", size: 7.5pt, weight: "black", fill: red, "ESTIMATED TOTAL LEAK")
     #v(0.15cm)
     #text(font: "Inter", size: 22pt, weight: "black", fill: red, estTotal)
     #v(0.05cm)
