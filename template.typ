@@ -190,27 +190,30 @@
 #small-spacer
 #card[
   #grid(columns: 3, gutter: 0.2cm,
-    align(center, [
+    [
+      #set align(center)
       #mono(size: 4.5pt, fill: red)[DATA DECAY]
       #v(0.1cm)
       #text(font: "Inter", size: 13pt, weight: "black", fill: red, estDecayLow + "–" + estDecayHigh)
       #v(0.08cm)
       #bdy(size: 5pt, fill: t3)[#ind.decay of CRM value lost per year]
-    ]),
-    align(center, [
+    ],
+    [
+      #set align(center)
       #mono(size: 4.5pt, fill: amber)[ADMIN DRAG]
       #v(0.1cm)
       #text(font: "Inter", size: 13pt, weight: "black", fill: amber, estAdmin)
       #v(0.08cm)
       #bdy(size: 5pt, fill: t3)[#ind.admin of team hours on CRM admin]
-    ]),
-    align(center, [
+    ],
+    [
+      #set align(center)
       #mono(size: 4.5pt, fill: green)[MISSED OPPORTUNITY]
       #v(0.1cm)
       #text(font: "Inter", size: 13pt, weight: "black", fill: green, estOppLow + "–" + estOppHigh)
       #v(0.08cm)
       #bdy(size: 5pt, fill: t3)[#ind.opp in upsells, cross-sells, referrals]
-    ]),
+    ],
   )
   #v(0.2cm)
   #align(center, [
