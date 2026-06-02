@@ -41,8 +41,8 @@
 #let spacer = { v(0.3cm) }
 #let small-spacer = { v(0.15cm) }
 
-#let card(body) = block(width: 100%, fill: card-bg, stroke: 0.3pt + luma(15), radius: 3pt, inset: 14pt, body)
-#let neon-card(body) = block(width: 100%, fill: neo, stroke: 0.4pt + neon-dim, radius: 3pt, inset: 14pt, body)
+#let card(body) = block(width: 100%, fill: card-bg, stroke: 0.3pt + luma(15), radius: 3pt, inset: 10pt, body)
+#let neon-card(body) = block(width: 100%, fill: neo, stroke: 0.4pt + neon-dim, radius: 3pt, inset: 10pt, body)
 
 #let metric-card(label, value) = {
   card[
@@ -141,7 +141,7 @@
         #text(font: "Inter", size: 6pt, fill: t3, style: "italic")[Based on self-assessment benchmarks against #ind.sample]
       ],
     )
-    #spacer
+    #small-spacer
     // ── EXECUTIVE SUMMARY ──
     #card[
       #bdy(size: 7pt)[#name, this report compares your responses against #ind.sample and industry benchmarks (CSIRO, HubSpot, Deloitte, Gartner 2025–2026). It's not a full audit — it's a starting point, built from your self-assessment, to show where AI-driven workflow changes could have the biggest impact on your revenue operations.]
@@ -151,32 +151,19 @@
       #bdy(size: 6.5pt)[At an estimated #text(fill: neon, revenue) in revenue, that's approximately #text(fill: red, weight: "black", estTotal)/year in value eroding through data decay, admin drag, and missed opportunities. A paid diagnostic would pinpoint the exact figure from your actual CRM data.]
     ]
   ],
-  // ── SCORE CARD ──
+  // ── SCORE (no sub-scores) ──
   align(center + horizon, [
     #mono(size: 4.5pt)[PERFORMANCE SCORE]
-    #v(0.25cm)
+    #v(0.2cm)
     #block(width: 72pt, height: 72pt, fill: none, stroke: 2.5pt + luma(18), radius: 50%,
       align(center + horizon,
         text(font: "Inter", size: 26pt, weight: "black", fill: sevCol, str(score))
       )
     )
-    #v(0.12cm)
+    #v(0.1cm)
     #text(font: "JetBrains Mono", size: 5.5pt, fill: sevCol, weight: "black", sev)
-    #v(0.2cm)
-    #grid(columns: 3, gutter: 0.1cm,
-      text(font: "JetBrains Mono", size: 4.5pt, fill: t3, "DATA"),
-      text(font: "JetBrains Mono", size: 4.5pt, fill: t3, "ADMIN"),
-      text(font: "JetBrains Mono", size: 4.5pt, fill: t3, "PROC."),
-    )
-    #grid(columns: 3, gutter: 0.1cm,
-      text(font: "Inter", size: 7pt, weight: "black", fill: green, str(yrScore)),
-      text(font: "Inter", size: 7pt, weight: "black", fill: if adScore >= 15 { green } else { amber }, str(adScore)),
-      text(font: "Inter", size: 7pt, weight: "black", fill: if hdScore >= 15 { green } else { amber }, str(hdScore)),
-    )
   ]),
 )
-
-#spacer
 
 // ── KEY FINDING ──
 #neon-card[
@@ -225,11 +212,13 @@
       #bdy(size: 5pt, fill: t3)[#ind.opp in upsells, cross-sells, referrals]
     ]),
   )
-  #v(0.15cm)
+  #v(0.2cm)
   #align(center, [
-    #text(font: "Inter", size: 9pt, weight: "black", fill: red)[Estimated total leak: #text(fill: red, estTotal)/year]
-    #v(0.03cm)
-    #bdy(size: 5pt, fill: t3)[Directional estimate. The exact number lives in your CRM.]
+    #mono(size: 5pt, fill: t3)[ESTIMATED TOTAL LEAK]
+    #v(0.15cm)
+    #text(font: "Inter", size: 22pt, weight: "black", fill: red, estTotal)
+    #v(0.05cm)
+    #bdy(size: 5.5pt, fill: t3)[per year · Directional estimate — your CRM has the exact number]
   ])
 ]
 
