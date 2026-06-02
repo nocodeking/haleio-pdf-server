@@ -438,7 +438,7 @@
     #bdy(size: 6pt)[NRR lift from automated triggers]
     #v(0.03cm)
     #bdy(size: 5.5pt, fill: t3)[Customer Success team]
-  ])),
+  ]),
 )
 
 #v(0.35cm)
