@@ -20,6 +20,7 @@ WORKDIR /app
 # Copy assets
 COPY fonts/ ./fonts/
 COPY template.typ ./template.typ
+COPY haleio-logo.svg ./haleio-logo.svg
 COPY server.js ./server.js
 COPY package.json ./package.json
 

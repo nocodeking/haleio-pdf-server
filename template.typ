@@ -1,5 +1,5 @@
-// HALEIO Revenue Performance Report v5
-// Typst 0.14 · Inter + JetBrains Mono · Dark theme
+// HALEIO Revenue Performance Report v6
+// Typst 0.14 · Inter + JetBrains Mono · Dark theme · Personalised
 
 // ── DATA ──
 #let company = "Acme Industries"
@@ -104,62 +104,74 @@
 
 // ═══════════════════════════ PAGE 1 ═══════════════════════════
 
+// ── LOGO ──
+#align(left, image("haleio-logo.svg", height: 18pt))
+
+#v(0.6cm)
 #edge
-#v(0.4cm)
+#v(0.5cm)
 
-#h1[Revenue Performance Report]
-#v(0.1cm)
-#bdy(size: 7pt, fill: t3)[Prepared for #company · #name]
-#spacer
-
-// ── SCORE CARD ──
-#card[
-  #grid(columns: (1fr, 2fr), gutter: 0.5cm,
-    align(center + horizon, [
-      #mono(size: 5pt)[PERFORMANCE SCORE]
-      #v(0.3cm)
-      #block(width: 70pt, height: 70pt, fill: none, stroke: 2.5pt + luma(18),
-        align(center + horizon,
-          text(font: "Inter", size: 24pt, weight: "black", fill: sevCol, str(score))))
-      #v(0.15cm)
-      #text(font: "JetBrains Mono", size: 6pt, fill: sevCol, weight: "black", sev)
-      #v(0.25cm)
-      #grid(columns: 3, gutter: 0.15cm,
-        text(font: "JetBrains Mono", size: 4.5pt, fill: t3, "DATA"),
-        text(font: "JetBrains Mono", size: 4.5pt, fill: t3, "ADMIN"),
-        text(font: "JetBrains Mono", size: 4.5pt, fill: t3, "PROCESS"),
+// ── HEADER ──
+#grid(columns: (2fr, 1fr), gutter: 0.5cm,
+  [
+    #h1[Revenue Performance Report]
+    #v(0.3cm)
+    #grid(columns: (auto, 1fr), gutter: 0.3cm,
+      [
+        #mono(size: 5pt, fill: neon)[PREPARED FOR]
+        #v(0.1cm)
+        #text(font: "Inter", size: 11pt, weight: "black", fill: t1, name)
+        #v(0.05cm)
+        #text(font: "Inter", size: 7.5pt, fill: neon, company)
+        #v(0.02cm)
+        #mono(size: 5pt, fill: t3)[#text(fill: neon-dim, industry)]
+      ],
+      [
+        #mono(size: 4.5pt, fill: t3)[SAMPLE]
+        #v(0.05cm)
+        #text(font: "Inter", size: 6pt, fill: t3, style: "italic")[Based on self-assessment benchmarks against #ind.sample]
+      ],
+    )
+    #spacer
+    // ── EXECUTIVE SUMMARY ──
+    #card[
+      #bdy(size: 7pt)[#name, this report compares your responses against #ind.sample and industry benchmarks (CSIRO, HubSpot, Deloitte, Gartner 2025–2026). It's not a full audit — it's a starting point, built from your self-assessment, to show where AI-driven workflow changes could have the biggest impact on your revenue operations.]
+      #small-spacer
+      #bdy(size: 6.5pt, fill: t3)[Three benchmarks tell the story: #ind.n faces a #text(fill: neon, ind.gap) AI adoption gap, #ind.decay annual data decay, and #ind.admin of team time lost to admin. The opportunities below are specific to #text(fill: neon, company).]
+    ]
+  ],
+  // ── SCORE CARD ──
+  align(center + horizon, [
+    #mono(size: 4.5pt)[PERFORMANCE SCORE]
+    #v(0.25cm)
+    #block(width: 72pt, height: 72pt, fill: none, stroke: 2.5pt + luma(18), radius: 50%,
+      align(center + horizon,
+        text(font: "Inter", size: 26pt, weight: "black", fill: sevCol, str(score))
       )
-      #grid(columns: 3, gutter: 0.15cm,
-        text(font: "Inter", size: 7pt, weight: "black", fill: green, str(yrScore)),
-        text(font: "Inter", size: 7pt, weight: "black", fill: if adScore >= 15 { green } else { amber }, str(adScore)),
-        text(font: "Inter", size: 7pt, weight: "black", fill: if hdScore >= 15 { green } else { amber }, str(hdScore)),
-      )
-    ]),
-    [
-      #h2[What This Means]
-      #v(0.25cm)
-      #bdy[
-        #company operates in #ind.n. This sector
-        has a #text(fill: neon, ind.gap) AI adoption gap.
-        #ind.detail With #yearsOnCrm in CRM and
-        #adminHours on admin, your data is underutilised.
-        #v(0.25cm)
-        #text(fill: neon)[#ind.ai]
-      ]
-    ],
-  )
-]
+    )
+    #v(0.12cm)
+    #text(font: "JetBrains Mono", size: 5.5pt, fill: sevCol, weight: "black", sev)
+    #v(0.2cm)
+    #grid(columns: 3, gutter: 0.1cm,
+      text(font: "JetBrains Mono", size: 4.5pt, fill: t3, "DATA"),
+      text(font: "JetBrains Mono", size: 4.5pt, fill: t3, "ADMIN"),
+      text(font: "JetBrains Mono", size: 4.5pt, fill: t3, "PROC."),
+    )
+    #grid(columns: 3, gutter: 0.1cm,
+      text(font: "Inter", size: 7pt, weight: "black", fill: green, str(yrScore)),
+      text(font: "Inter", size: 7pt, weight: "black", fill: if adScore >= 15 { green } else { amber }, str(adScore)),
+      text(font: "Inter", size: 7pt, weight: "black", fill: if hdScore >= 15 { green } else { amber }, str(hdScore)),
+    )
+  ]),
+)
 
 #spacer
 
 // ── KEY FINDING ──
 #neon-card[
-  #h2[Your #text(fill: neon)[Highest-Impact Opportunity]]
+  #text(font: "Inter", size: 12pt, weight: "black", fill: t1)[#text(fill: neon)[Your] Highest-Impact Opportunity]
   #v(0.2cm)
-  #bdy[Based on your top concern — _#headacheLabels.at(0)_ — your CRM is data-rich
-    but process-poor. Automated AI workflows typically recover
-    #text(fill: neon)[40–60% of admin time] and surface
-    #text(fill: neon)[15–25% more revenue] from existing records.]
+  #bdy[Based on what you flagged first — _#headacheLabels.at(0)_ — #company's CRM is data-rich but process-poor. Automated AI workflows typically recover #text(fill: neon)[40–60% of admin time] and surface #text(fill: neon)[15–25% more revenue] from records that are already sitting in your system, waiting to be used.]
   #small-spacer
   #grid(columns: 2, gutter: 0.4cm,
     metric-card("CRM DATA DECAY", ind.decay),
@@ -187,7 +199,7 @@
 
 #h1[Your #text(fill: neon)[AI] Opportunity Map]
 #v(0.1cm)
-#bdy(size: 7pt, fill: t3)[How AI transforms each of your reported challenges — for #industry]
+#bdy(size: 7pt, fill: t3)[How AI transforms each challenge you reported — tailored for #industry]
 
 #v(0.5cm)
 
@@ -220,10 +232,10 @@
 // Data accuracy
 #if hasData {
   ai-module(n1, "CRM Data That Actually Works",
-    ind.n + " CRMs decay at " + ind.decay + " per year. " + yearsOnCrm + " of accumulated records — expired contacts, duplicates, stale data.",
-    "AI enrichment scans every record. Fills gaps from public data. Deduplicates. Flags decay. Runs continuously on your infrastructure — private, sovereign, yours.",
-    "80% less manual data entry. Accuracy typically 65% → 90%+ within 30 days.",
-    "A welding distributor surfaced +$1M in upsells from their existing Sage 50 data — no new records needed."
+    ind.n + " CRMs decay at " + ind.decay + " per year. " + yearsOnCrm + " of accumulated records — expired contacts, duplicates, stale data — quietly eroding your pipeline.",
+    "We clean and enrich every record using AI that runs on your infrastructure. Private. Sovereign. Yours. Within 30 days, accuracy typically lifts from 65% to 90%+.",
+    "80% less manual data entry. Every record becomes a lead source, not a liability.",
+    "A welding distributor surfaced +$1M in upsells from their existing Sage 50 data — no new records, no new hires."
   )
   small-spacer
 }
@@ -232,8 +244,8 @@
 #if hasAdmin {
   ai-module(n2a, "Admin Workflows That Run Themselves",
     adminHours + " on CRM admin. " + ind.admn,
-    "AI workflow agents automate data entry, report generation, call logging, and field updates. Your team works — the AI keeps the CRM current.",
-    "Frees 12+ hours/week for revenue work. One manufacturer cut claims processing 5× — from 21 days to 4.",
+    "AI agents handle data entry, report generation, call logging, and field updates automatically. Your team focuses on revenue work — the AI keeps the CRM current.",
+    "Frees 12+ hours per week per person. One manufacturer cut claims processing from 21 days to 4.",
     "Warranty manufacturer: 21-day manual triage → 4-day automated workflow. No new hires needed."
   )
   small-spacer
@@ -242,10 +254,10 @@
 // Follow-up
 #if hasFollowup {
   ai-module(n2b, "No Deal Goes Cold Again",
-    "CSO Insights (2025): automated alerts recover 2–3 stalled deals per rep per month. In " + ind.n + ", the most common leak is nobody being reminded.",
-    "AI monitors your pipeline real-time. Flags stalled deals. Drafts personalised follow-ups. Alerts the right person on Slack or Teams.",
-    "Recovers \$40k–\$120k per rep per year. One distributor recovered \$180k in 60 days.",
-    "Customer Success team: zero post-sale process → 90-day automated triggers pushed revenue 97% → 115% of base."
+    "CSO Insights (2025): automated alerts recover 2–3 stalled deals per rep per month. In " + ind.n + ", the most common leak is simply nobody being reminded.",
+    "AI monitors your pipeline in real time. Flags stalled deals. Drafts personalised follow-ups. Alerts the right person on Slack or Teams before the opportunity goes cold.",
+    "Recovers \\$40k–\\$120k per rep per year. One distributor recovered \\$180k in 60 days.",
+    "Customer Success team: zero post-sale process → 90-day automated triggers pushed NRR from 97% to 115%."
   )
   small-spacer
 }
@@ -253,10 +265,10 @@
 // Inconsistent
 #if hasProcess {
   ai-module(n3, "One Process. Everyone Follows It.",
-    "Inconsistent CRM usage is the #1 cause of bad data in " + industry + ". When every rep works differently, management flies blind.",
-    "AI-guided workflows enforce consistent entry, stage progression, and follow-up cadence. Reps get nudges — not mandates.",
+    "Inconsistent CRM usage is the #1 cause of bad data in " + industry + ". When every rep works differently, management flies blind — and pipeline forecasts become guesswork.",
+    "AI-guided workflows enforce consistent entry, stage progression, and follow-up cadence. Reps get nudges, not mandates — adoption improves because the system helps, not because someone enforces.",
     "CRM adoption improves 40–60% with AI guidance vs top-down enforcement.",
-    "Same methodology behind all three HALEIO client outcomes above."
+    "Same methodology behind all three HALEIO client outcomes referenced above."
   )
   small-spacer
 }
@@ -264,10 +276,10 @@
 // Visibility
 #if hasVis {
   ai-module(n4, "See Everything. In Real Time.",
-    "Managers in " + industry + " rely on weekly spreadsheets. Reports are stale by the time they reach leadership.",
-    "AI dashboards update continuously from live CRM. Pipeline health, rep activity, deal velocity — real time, zero manual work.",
-    "Pipeline review cut from 4 hours to 15 minutes. Decisions made on live data, not last week's exports.",
-    "Reports that used to take a full day now generate automatically every morning."
+    "Managers in " + industry + " rely on weekly spreadsheets. By the time numbers reach leadership, they're already stale. Decisions end up based on last week's reality.",
+    "AI dashboards update continuously from live CRM. Pipeline health, rep activity, deal velocity — real time, zero manual work. Your weekly pipeline review drops from 4 hours to 15 minutes.",
+    "Pipeline review cut from 4 hours to 15 minutes. Decisions made on live data, not exports.",
+    "Reports that used to consume a full day now generate automatically every morning."
   )
   small-spacer
 }
@@ -305,7 +317,7 @@
 
 #h1[Your #text(fill: neon)[90-Day] AI Roadmap]
 #v(0.1cm)
-#bdy(size: 7pt, fill: t3)[Fixed scope. Fixed timeline. Fixed fee. Four phases. You own everything.]
+#bdy(size: 7pt, fill: t3)[Fixed scope. Fixed timeline. Fixed fee. Four phases. You own everything we build.]
 
 #v(0.4cm)
 
@@ -343,7 +355,7 @@
 
 #grid(columns: 2, gutter: 0.3cm,
   phase(3, "WK 9-10", "Stress Test & Validate",
-    "Your team sees the engine working on actual CRM data. Edge cases tested. Documentation written. No surprises on handover day."
+    "Your team sees the engine working on real CRM data. Edge cases tested. Documentation written. No surprises on handover day."
   ),
   phase(4, "WK 11–13", "Training & Handover",
     "Your team trained. Full documentation delivered. Quarterly reviews optional. You own the workflows, the logic, the IP — permanently."
@@ -357,8 +369,7 @@
   #align(center, [
     #h2[Get the Real Numbers from Your CRM]
     #v(0.2cm)
-    #bdy(size: 7.5pt)[This report is based on your self-assessment and industry benchmarks.]
-    #bdy(size: 7.5pt)[A paid diagnostic examines your actual CRM data to find the exact dollar value of every opportunity.]
+    #bdy(size: 7.5pt)[This report gives you a directional view based on your self-assessment and industry benchmarks. The actual numbers — the exact dollar value of every leak, every delay, every missed follow-up — are sitting in your CRM right now.]
     #v(0.35cm)
     #text(font: "Inter", size: 14pt, weight: "black", fill: neon)[Book a Diagnostic · \$4,950]
     #v(0.15cm)
@@ -376,5 +387,5 @@
   Sources: CSIRO AI Adoption in Australian Industry 2025 · HubSpot Sales Benchmarks 2026 ·
   Deloitte AI in B2B Distribution & Manufacturing 2025 · CSO Insights 2025 · Gartner 2025.
   Industry benchmarks from public research. Results vary. Not a guarantee of specific outcomes.
-  Prepared in Adelaide, Australia.
+  Prepared in Adelaide, Australia for #company.
 ])
