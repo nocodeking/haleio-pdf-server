@@ -415,21 +415,24 @@
 #mono(size: 5.5pt)[PROVEN RESULTS — REAL CLIENT OUTCOMES]
 #small-spacer
 #grid(columns: 3, gutter: 0.2cm,
-  block(fill: card-bg, stroke: 0.5pt + luma(18), radius: 4pt, inset: 10pt, align(center, [
+  block(fill: card-bg, stroke: 0.5pt + luma(18), radius: 4pt, inset: 10pt, [
+    #set align(center)
     #text(font: "Inter", size: 13pt, weight: "black", fill: neon, "+$1M")
     #v(0.06cm)
     #bdy(size: 6pt)[Upsell revenue from existing Sage 50 data]
     #v(0.03cm)
     #bdy(size: 5.5pt, fill: t3)[Welding distributor]
-  ])),
-  block(fill: card-bg, stroke: 0.5pt + luma(18), radius: 4pt, inset: 10pt, align(center, [
+  ]),
+  block(fill: card-bg, stroke: 0.5pt + luma(18), radius: 4pt, inset: 10pt, [
+    #set align(center)
     #text(font: "Inter", size: 13pt, weight: "black", fill: amber, "21d → 4d")
     #v(0.06cm)
     #bdy(size: 6pt)[Claims processing cycle cut by 5×]
     #v(0.03cm)
     #bdy(size: 5.5pt, fill: t3)[Warranty manufacturer]
-  ])),
-  block(fill: card-bg, stroke: 0.5pt + luma(18), radius: 4pt, inset: 10pt, align(center, [
+  ]),
+  block(fill: card-bg, stroke: 0.5pt + luma(18), radius: 4pt, inset: 10pt, [
+    #set align(center)
     #text(font: "Inter", size: 13pt, weight: "black", fill: green, "97% → 115%")
     #v(0.06cm)
     #bdy(size: 6pt)[NRR lift from automated triggers]
